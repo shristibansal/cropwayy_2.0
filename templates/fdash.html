@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Dashboard">
+  <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+  <title>CROPWAYY | DASHBOARD</title>
+
+    
+  <link href="{{ url_for('static', filename='img/favicon.png') }}" rel="icon">
+  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Bootstrap core CSS -->
+  <link href=" {{ url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  <!--external css-->
+  <link href=" {{ url_for('static', filename='lib/font-awesome/css/font-awesome.css') }}"  rel="stylesheet" />
+  <link href="{{ url_for('static',filename='lib/fancybox/jquery.fancybox.css') }}"  rel="stylesheet" />
+  <!-- Custom styles for this template -->
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/style-responsive.css') }}"rel="stylesheet">
+  <script src="{{ url_for('static', filename='lib/jquery/jquery.min.js') }}" ></script>
+
+  <script src="lib/chart-master/Chart.js"></script>
+
+    <style>
+    .card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 320px;
+        height: 390px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+
+.price {
+  color: grey;
+  font-size: 22px;
+}
+
+.card button {
+  border: none;
+  padding: 12px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer; 
+  width: 100%;
+  font-size: 18px;
+}
+
+.card button:hover {
+  opacity: 0.7;
+}
+        
+        .flip-card {
+  background-color: transparent;
+  width: 460px;
+  height: 280px;
+  border: 1px solid #f1f1f1;
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+}
+
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-card-front {
+  background-color: #5bc0de;
+  color: black;
+}
+
+/* Style the back side */
+.flip-card-back {
+  background-color: #ed5565;
+  color: white;
+  transform: rotateY(180deg);
+}
+
+    </style>
+  
+</head>
+
+<body>
+  <section id="container">
+    <!-- **********************************************************************************************************************************************************
+        TOP BAR CONTENT & NOTIFICATIONS
+        *********************************************************************************************************************************************************** -->
+    <!--header start-->
+    <header class="header black-bg">
+      <div class="sidebar-toggle-box">
+        <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+      </div>
+      <!--logo start-->
+      <a href="index.html" class="logo"><b>CROP<span>WAYY</span></b></a>
+   {% if current_user.is_authenticated %}
+      
+       <div class="top-menu">
+        <ul class="nav pull-right top-menu">
+          <li><a class="logout" href="{{url_for('logout')}}">Logout</a></li>
+        </ul>
+      </div>
+        {% else %}
+         <div class="top-menu">
+        <ul class="nav pull-right top-menu">
+          <li><a class="logout" href="{{url_for('login')}}">Login</a></li>
+        </ul>
+      </div>
+        {% endif %}
+    </header>
+    <!--header end-->
+    <!-- **********************************************************************************************************************************************************
+        MAIN SIDEBAR MENU
+        *********************************************************************************************************************************************************** -->
+    <!--sidebar start-->
+      <aside>
+      <div id="sidebar" class="nav-collapse ">
+        <!-- sidebar menu start-->
+        <ul class="sidebar-menu" id="nav-accordion">
+          <p class="centered"> {% if current_user.is_authenticated %}
+              {% if current_user.UType=='farmer' %}
+             <img src="{{ url_for('static', filename='img/f_user.jpg') }}" class="img-circle" width="80">
+              {% elif current_user.UType=='corporate' %}
+              <img src="{{ url_for('static', filename='img/c_user.png') }}" class="img-circle" width="80">
+             
+              {% elif current_user.UType=='admin' %}
+             
+              <img src="{{ url_for('static', filename='img/a_user.jpg') }}" class="img-circle" width="80">
+              {% endif %}
+                {% else %}
+           <img src="{{ url_for('static', filename='img/favicon.png') }}" class="img-circle" width="80">
+            {% endif %}
+            
+            
+            
+            </p>
+          <h5 class="centered">
+              
+              {% if current_user.is_authenticated %}
+              {% if current_user.UType=='farmer' %}
+              <a href ="{{url_for('fprofile')}}">  {{ current_user.FullName}} </a>
+              {% elif current_user.UType=='corporate' %}
+              <a href ="{{url_for('cprofile')}}">  {{ current_user.FullName}} </a>
+              {% elif current_user.UType=='admin' %}
+              <a href ="{{url_for('cprofile')}}">  {{ current_user.FullName}} </a>
+              {% elif current_user.UType=='retailer' %}
+              <a href ="{{url_for('rprofile')}}">  {{ current_user.FullName}} </a>
+              {% elif current_user.UType=='wholesaler' %}
+              <a href ="{{url_for('wprofile')}}">  {{ current_user.FullName}} </a>
+              {% endif %}
+                {% else %}
+           Cropwian
+            {% endif %}
+            </h5>
+          <li class="mt">
+            <a   href="{{url_for('home')}}">
+              <i class="fa fa-home"></i>
+              <span>Home</span>
+              </a>
+          </li>
+            <li class="sub-menu">
+            <a href="{{url_for('aboutus')}}">
+              <i class="fa fa-globe"></i>
+              <span>About Us</span>
+              </a>
+             </li>
+             <li class="sub-menu">
+            <a  href="{{url_for('gallery')}}">
+              <i class="fa fa-camera"></i>
+              <span>Gallery</span>
+              </a>
+             </li>
+             <li class="sub-menu">
+            <a href="{{url_for('contactus')}}">
+              <i class="fa fa-phone-square"></i>
+              <span>Contact Us</span>
+              </a>
+             </li>
+             <li class="sub-menu">
+            <a href="{{url_for('farmstore')}}">
+              <i class="fa fa-shopping-cart"></i>
+              <span>Farm Store</span>
+              </a>
+             </li>
+          
+            {% if current_user.is_authenticated %}
+           {% if current_user.UType=='farmer' %}
+           <li class="sub-menu">
+            <a  href="{{url_for('farmBot')}}">
+              <i class='fas fa-robot'></i>
+              <span>farmBot</span>
+              </a>
+              </li>
+            <li class="sub-menu">
+            <a class="active" href="{{url_for('fDash')}}">
+              <i class="fa fa-dashboard"></i>
+              <span>Farmer's Dashboard</span>
+              </a>
+             </li>
+             <li class="sub-menu">
+            <a href="javascript:;">
+              <i class="fa fa-desktop"></i>
+              <span>Our Services</span>
+              
+              </a>
+              <ul class="sub">
+                <li><a href="{{url_for('prediction')}}">Predict Disease</a></li>
+                <li><a href="{{url_for('cropRec')}}">Crop Recommendation</a></li>
+                <li><a href="{{url_for('fertilizer')}}">Fertilizers</a></li>
+                <li><a href="{{url_for('flower')}}">Flower Species</a></li>
+                <li><a href="{{url_for('tips')}}">Everyday Tips</a></li>
+                <li><a href="{{url_for('govtScheme')}}">Govt. Schemes</a></li>
+              </ul>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('sellCrops')}}">
+              <i class="fa fa-inr"></i>
+              <span>Sell Crops</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('getContracts')}}">
+              <i class="fa fa-pencil-square-o"></i>
+              <span>Get Contracts</span>
+            </a>
+          </li>
+             {% elif current_user.UType=='corporate' %}
+            <li class="sub-menu">
+            <a href="{{url_for('cDash')}}">
+              <i class="fa fa-dashboard"></i>
+              <span>Corporate's Dashboard</span>
+              </a>
+             </li>
+              {% elif current_user.UType=='admin' %}
+            <li class="sub-menu">
+            <a href="{{url_for('cDash')}}">
+              <i class="fa fa-dashboard"></i>
+              <span>Admin's Dashboard</span>
+              </a>
+             </li>
+            {% endif %}
+            
+            
+              {% else %}
+            
+             <li class="sub-menu">
+            <a href="{{url_for('login')}}">
+              <i class="fa fa-sign-in"></i>
+              <span>Login</span>
+              </a>
+             </li>
+             <li class="sub-menu">
+            <a href="{{url_for('signup')}}">
+              <i class="fa fa-phone-square"></i>
+              <span>Signup</span>
+              </a>
+             </li>
+            
+            {% endif %}
+          
+        
+     
+        </ul>
+        <!-- sidebar menu end-->
+      </div>
+    </aside>
+    <!--sidebar end-->
+    <!-- **********************************************************************************************************************************************************
+        MAIN CONTENT
+        *********************************************************************************************************************************************************** -->
+      
+ 
+    <!--main content start-->
+    <section id="main-content">
+        
+      <section class="wrapper">
+        <div class="row">
+          <div class="col-lg-9 main-chart">
+          <div class="center-desk">
+                                <div class="logo">
+                                    <a href="index.html"><img src="{{ url_for('static',filename='img/banner.gif') }}" alt="logo"  height=300px margin=auto padding=10px/></a>
+                                </div>
+              
+              </div><hr>
+                  <h2> <center>Our Services</center></h2>
+
+          
+            <!--custom chart end-->
+              <div>
+            <div class="row mt">
+              <!-- SERVER STATUS PANELS -->
+              <div class="col-md-4 col-sm-4 mb">
+                  <div class="card">
+                      <img src="{{ url_for('static',filename='img/ai_image.jpg') }}" alt="Cropwayy" style="width:100%">
+                      <h1>Prediction </h1>
+
+                      <p>Insert an image of your crop and know if your crop is suffering from a disease.</p>
+                      <p><button><a href = "{{url_for('prediction')}}">Explore Now</a></button></p>
+                    </div>
+              </div>
+                <div class="col-md-4 col-sm-4 mb">
+                  <div class="card">
+                      <img src="{{ url_for('static',filename='img/recomendation.jpg') }}" alt="Cropwayy" style="width:100%">
+                      <h1>Recommendation </h1>
+
+                      <p>Enter the required details and know what crop should you grow to maximize your harvest.</p>
+                      <p><button><a href = "{{url_for('cropRec')}}">Explore Now</a></button></p>
+                    </div>
+
+              </div>
+                <div class="col-md-4 col-sm-4 mb">
+                  <div class="card">
+                      <img src="{{ url_for('static',filename='img/fert.jpg') }}" alt="Cropwayy" style="width:100%">
+                      <h1>Fertilizers</h1>
+
+                      <p>Enter the details and know what the right amount of fertilizers for your crop to maximize your harvest.</p>
+                      <p><button><a href = "{{url_for('fertilizer')}}">explore Now</a></button></p>
+                    </div>
+
+               
+              </div>
+         
+                <!-- /grey-panel -->
+              </div>
+                  <div class="row mt">
+              <!-- SERVER STATUS PANELS -->
+              <div class="col-md-4 col-sm-4 mb">
+                  <div class="card">
+                      <img src="{{ url_for('static',filename='img/rose.jpeg') }}" alt="Cropwayy" style="width:100%">
+                      <h1>Flower Species</h1>
+
+                      <p>Insert an image of an flower and know it's name and origin.</p>
+                      <p><button>Coming Soon </button></p>
+                    </div>
+              </div>
+                <div class="col-md-4 col-sm-4 mb">
+                  <div class="card">
+                      <img src="{{ url_for('static',filename='img/cult.jpg') }}" alt="Cropwayy" style="width:100%">
+                      <h1>Cultivation Tips</h1>
+
+                      <p>Get farming tips to have maximise the yeild with minimum cost.</p>
+                      <p><button><a href = "{{url_for('tips')}}">Explore Now</a></button></p>
+                    </div>
+
+              </div>
+                <div class="col-md-4 col-sm-4 mb">
+                  <div class="card">
+                      <img src="{{ url_for('static',filename='img/modi.jpg') }}" alt="Govt" style="width:100%">
+                      <h1>Govt. Schemes</h1>
+
+                      <p>Know about different government schemes to benifit our farmers.</p>
+                      <p><button><a href = "{{url_for('govtScheme')}}">Explore Now</a></button></p>
+                    </div>
+
+               
+              </div>
+         
+                <!-- /grey-panel -->
+              </div>
+              </div>
+              
+              <hr>
+              <!-- /col-md-4-->
+              <div class="row mt">
+                  <div class="col-md-6 col-sm-10 mb">
+                  <div class="flip-card">
+  <div class="flip-card-inner">
+    <div class="flip-card-front">
+      <a href = "{{url_for('sellCrops')}}">  <img src="{{ url_for('static',filename='img/sell_crops.gif') }}" alt="Avatar" style="width:460px;height:270px;"></a>
+    </div>
+    <div class="flip-card-back">
+      <h1>SELL CROPS</h1>
+        <h3>
+            <br>
+      <p>Now, sell crops at your own price,</p>
+      <p>We don not allow anyone to buy or sell below the MSP.</p>
+        </h3>
+    </div>
+  </div>
+                      </div></div>
+                  <div class="col-md-6 col-sm-10 mb">
+                  <div class="flip-card">
+  <div class="flip-card-inner">
+    <div class="flip-card-front">
+      <a href = "{{url_for('getContracts')}}">   <img src="{{ url_for('static',filename='img/get_hired.gif') }}" alt="Avatar" style="width:460px;height:270px;"></a>
+    </div>
+    <div class="flip-card-back">
+      <h1>Get Hired</h1>
+        <h3><br>
+      <p>Sign contracts with leading industries,</p>
+            <p>Get industry standard price and much more.</p></h3>
+      </div></div>
+  </div>
+</div>
+              
+              </div>
+            </div>
+          <!-- /col-lg-9 END SECTION MIDDLE -->
+          <!-- **********************************************************************************************************************************************************
+              RIGHT SIDEBAR CONTENT
+              *********************************************************************************************************************************************************** -->
+              <div class="col-lg-3 ds">
+                <!--COMPLETED ACTIONS DONUTS CHART-->
+                  
+                 <h2 align = 'center'>TEMPERATURE</h2> 
+                  <br>
+                <div class="donut-main">
+                  <a class="weatherwidget-io" href="https://forecast7.com/en/28d6677d23/delhi/" data-label_1="DELHI" data-label_2="WEATHER" data-theme="original" >DELHI WEATHER</a>
+    <script>
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+    </script>
+                  <h4>farmBot</h4>
+                  <a  href="{{url_for('farmBot')}}"> <img src = "{{ url_for('static',filename='img/bot.png') }}" height="650" width="220"></a><br>
+          
+                  <canvas id="newchart" height="130" width="130"></canvas>
+                  
+              <!-- /col-lg-3 -->
+              </div>
+              </div>
+        <!-- /row -->
+      </section>
+    </section>
+    <!--main content end-->
+    <!--footer start-->
+    <footer class="site-footer">
+      <div class="text-center">
+        <p>
+          &copy; Copyrights <strong>Cropwayy</strong>. All Rights Reserved
+        </p>
+        
+          Created by team Cropwayy 
+        </div>
+        <a href="index.html#" class="go-top">
+          <i class="fa fa-angle-up"></i>
+        </a>
+      </footer>
+      
+    <!--footer end-->
+      
+<script>
+      
+  .card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+
+.price {
+  color: grey;
+  font-size: 22px;
+}
+
+.card button {
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+.card button:hover {
+  opacity: 0.7;
+}
+      
+      
+</script>
+      
+      
+  </section>
+  <!-- js placed at the end of the document so the pages load faster -->
+    <script src="{{ url_for('static', filename='lib/jquery/jquery.min.js') }}" type="text/javascript"></script>
+     <script src="{{ url_for('static', filename='lib/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
+     <script src="{{ url_for('static', filename='lib/jquery-ui-1.9.2.custom.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='lib/jquery.ui.touch-punch.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='lib/jquery.ui.touch-punch.min.js') }}" type="text/javascript"></script>
+ <script src="{{ url_for('static', filename='lib/jquery.dcjqaccordion.2.7.js') }}" type="text/javascript"></script>
+ <script src="{{ url_for('static', filename='lib/jquery.scrollTo.min.js') }}" type="text/javascript"></script>
+ <script src="{{ url_for('static', filename='lib/jquery.nicescroll.js') }}" type="text/javascript"></script>
+
+    
+
+  <!--common script for all pages-->
+     <script src="{{ url_for('static', filename='lib/common-scripts.js') }}" type="text/javascript"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      var unique_id = $.gritter.add({
+        // (string | mandatory) the heading of the notification
+        title: 'Welcome to Cropwayy!',
+        // (string | mandatory) the text inside the notification
+        text: 'Hover me to enable the Close Button. You can hide the left sidebar clicking on the button next to the logo.',
+        // (string | optional) the image to display on the left
+        image: 'img/ui-sam.jpg',
+        // (bool | optional) if you want it to fade out on its own or just sit there
+        sticky: false,
+        // (int | optional) the time you want it to be alive for before fading out
+        time: 8000,
+        // (string | optional) the class name you want to apply to that specific message
+        class_name: 'my-sticky-class'
+      });
+
+      return false;
+    });
+  </script>
+  <script type="application/javascript">
+    $(document).ready(function() {
+      $("#date-popover").popover({
+        html: true,
+        trigger: "manual"
+      });
+      $("#date-popover").hide();
+      $("#date-popover").click(function(e) {
+        $(this).hide();
+      });
+
+      $("#my-calendar").zabuto_calendar({
+        action: function() {
+          return myDateFunction(this.id, false);
+        },
+        action_nav: function() {
+          return myNavFunction(this.id);
+        },
+        ajax: {
+          url: "show_data.php?action=1",
+          modal: true
+        },
+        legend: [{
+            type: "text",
+            label: "Special event",
+            badge: "00"
+          },
+          {
+            type: "block",
+            label: "Regular event",
+          }
+        ]
+      });
+    });
+
+    function myNavFunction(id) {
+      $("#date-popover").hide();
+      var nav = $("#" + id).data("navigation");
+      var to = $("#" + id).data("to");
+      console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
+    }
+  </script>
+</body>
+
+</html>

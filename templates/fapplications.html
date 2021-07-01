@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Dashboard">
+  <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+  <title>Cropwayy | Home</title>
+
+  <!-- Favicons -->
+  <link href="{{ url_for('static', filename='img/favicon.ico') }}" rel="icon">
+
+  <!-- Bootstrap core CSS -->
+
+
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}">
+
+  <!--external css-->
+  <link rel="stylesheet" href="{{ url_for('static', filename='lib/font-awesome/css/font-awesome.css') }}">
+  <!-- Custom styles for this template -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style-responsive.css') }}">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='lib/advanced-datatable/css/DT_bootstrap.css') }}">
+
+
+  <style>
+    .alert {
+
+      text-align: center;
+      font-family: 'Ruda', sans-serif;
+      font-size: 13px;
+
+
+    }
+
+    .alert-warning {
+      border: 2px solid #faebcc;
+      border-radius: 5px;
+    }
+  </style>
+
+
+  <style>
+    html {
+      box-sizing: border-box;
+    }
+
+    .custom-box {
+      border: 8px solid #4ECDC4;
+      border-radius: 10px;
+      width: 70vh;
+      background: linear-gradient(to bottom, #ffffff 0%, #4ecdc4 600%);
+
+    }
+
+    *,
+    *:before,
+    *:after {
+      box-sizing: inherit;
+    }
+
+    .column1 {
+      float: left;
+      width: 25%;
+      margin-bottom: 16px;
+      padding: 0 15px;
+    }
+
+    .card {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      margin: 8px;
+    }
+
+
+
+    .container {
+      padding: 0 16px;
+    }
+
+    .container::after,
+    .row::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+
+    .title {
+      color: grey;
+    }
+
+
+    .button:hover {
+      background-color: #555;
+    }
+
+    @media screen and (max-width: 650px) {
+      .column {
+        width: 100%;
+        display: block;
+      }
+    }
+  </style>
+  <style>
+    .adjust {
+      margin: 20px;
+
+    }
+
+    .content-pannel {
+      width: 100%;
+
+    }
+
+    .pn {
+
+      margin: 15px;
+      background-color: #d9534f;
+      color: white;
+      height: auto;
+    }
+
+    #profile-01 {
+      background-image: url(img/about.jpg);
+      width: auto;
+      margin: 15px;
+
+    }
+
+    img.src {
+      width: 100px;
+    }
+  </style>
+
+
+</head>
+
+<body>
+  <section id="container">
+    <!-- **********************************************************************************************************************************************************
+        TOP BAR CONTENT & NOTIFICATIONS
+        *********************************************************************************************************************************************************** -->
+    <!--header start-->
+    <header class="header black-bg">
+      <div class="sidebar-toggle-box">
+        <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+      </div>
+      <!--logo start-->
+      <a href="index.html" class="logo"><b>CROP<span>WAYY</span></b></a>
+      {% if current_user.is_authenticated %}
+
+      <div class="top-menu">
+        <ul class="nav pull-right top-menu">
+          <li><a class="logout" href="{{url_for('logout')}}">Logout</a></li>
+        </ul>
+      </div>
+      {% else %}
+      <div class="top-menu">
+        <ul class="nav pull-right top-menu">
+          <li><a class="logout" href="{{url_for('login')}}">Login</a></li>
+        </ul>
+      </div>
+      {% endif %}
+    </header>
+    <!--header end-->
+    <!-- **********************************************************************************************************************************************************
+        MAIN SIDEBAR MENU
+        *********************************************************************************************************************************************************** -->
+    <!--sidebar start-->
+    <aside>
+      <div id="sidebar" class="nav-collapse ">
+        <!-- sidebar menu start-->
+        <ul class="sidebar-menu" id="nav-accordion">
+          <p class="centered"> {% if current_user.is_authenticated %}
+            {% if current_user.UType=='farmer' %}
+            <img src="{{ url_for('static', filename='img/f_user.jpg') }}" class="img-circle" width="80">
+            {% elif current_user.UType=='corporate' %}
+            <img src="{{ url_for('static', filename='img/c_user.png') }}" class="img-circle" width="80">
+
+            {% elif current_user.UType=='admin' %}
+
+            <img src="{{ url_for('static', filename='img/a_user.jpg') }}" class="img-circle" width="80">
+            {% elif current_user.UType=='retailer' %}
+
+            <img src="{{ url_for('static', filename='img/a_user.jpg') }}" class="img-circle" width="80">
+
+            {% elif current_user.UType=='wholesaler' %}
+
+            <img src="{{ url_for('static', filename='img/a_user.jpg') }}" class="img-circle" width="80">
+            {% endif %}
+            {% else %}
+            <img src="{{ url_for('static', filename='img/favicon.png') }}" class="img-circle" width="80">
+            {% endif %}
+
+
+
+          </p>
+          <h5 class="centered">
+
+            {% if current_user.is_authenticated %}
+            {% if current_user.UType=='farmer' %}
+            <a href="{{url_for('fprofile')}}"> {{ current_user.FullName}} </a>
+            {% elif current_user.UType=='corporate' %}
+            <a href="{{url_for('cprofile')}}"> {{ current_user.FullName}} </a>
+            {% elif current_user.UType=='admin' %}
+            <a href="{{url_for('cprofile')}}"> {{ current_user.FullName}} </a>
+            {% elif current_user.UType=='retailer' %}
+            <a href="{{url_for('rprofile')}}"> {{ current_user.FullName}} </a>
+            {% elif current_user.UType=='wholesaler' %}
+            <a href="{{url_for('wprofile')}}"> {{ current_user.FullName}} </a>
+            {% endif %}
+            {% else %}
+            Cropwian
+            {% endif %}
+          </h5>
+          <li class="mt">
+            <a href="{{url_for('home')}}">
+              <i class="fa fa-home"></i>
+              <span>Home</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('aboutus')}}">
+              <i class="fa fa-globe"></i>
+              <span>About Us</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('gallery')}}">
+              <i class="fa fa-camera"></i>
+              <span>Gallery</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('contactus')}}">
+              <i class="fa fa-phone-square"></i>
+              <span>Contact Us</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('farmstore')}}">
+              <i class="fa fa-shopping-cart"></i>
+              <span>Farm Store</span>
+            </a>
+          </li>
+          {% if current_user.is_authenticated %}
+          {% if current_user.UType=='farmer' %}
+          <li class="sub-menu">
+            <a href="{{url_for('fDash')}}">
+              <i class="fa fa-dashboard"></i>
+              <span>Farmer's Dashboard</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="javascript:;">
+              <i class="fa fa-desktop"></i>
+              <span>Our Services</span>
+            </a>
+            <ul class="sub">
+              <li><a href="{{url_for('prediction')}}">Predict Disease</a></li>
+              <li><a href="{{url_for('cropRec')}}">Crop Recommendation</a></li>
+              <li><a href="{{url_for('fertilizer')}}">Fertilizers</a></li>
+              <li><a href="{{url_for('flower')}}">Flower Species</a></li>
+              <li><a href="{{url_for('tips')}}">Everyday Tips</a></li>
+              <li><a href="{{url_for('govtScheme')}}">Govt. Schemes</a></li>
+            </ul>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('sellCrops')}}">
+              <i class="fa fa-inr"></i>
+              <span>Sell Crops</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a class='active' href="{{url_for('getContracts')}}">
+              <i class="fa fa-pencil-square-o"></i>
+              <span>Get Contracts</span>
+            </a>
+          </li>
+          {% elif current_user.UType=='corporate' %}
+          <li class="sub-menu">
+            <a href="{{url_for('cDash')}}">
+              <i class="fa fa-dashboard"></i>
+              <span>Corporate's Dashboard</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a class="active" href="{{url_for('postContracts')}}">
+              <i class="fa fa-file-text"></i>
+              <span>Post Contracts</span>
+            </a>
+          </li>
+          {% elif current_user.UType=='admin' %}
+          <li class="sub-menu">
+            <a href="{{url_for('cDash')}}">
+              <i class="fa fa-dashboard"></i>
+              <span>Admin's Dashboard</span>
+            </a>
+          </li>
+          {% elif current_user.UType=='wholesaler' %}
+          <li class="sub-menu">
+            <a href="{{url_for('wDash')}}">
+              <i class="fa fa-dashboard"></i>
+              <span>wholesaler's Dashboard</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a class="active" href="{{url_for('buyProduce')}}">
+              <i class="fa fa-leaf"></i>
+              <span>Buy Produce</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('sellProduce')}}">
+              <i class="fa fa-money"></i>
+              <span>Sell Produce</span>
+            </a>
+          </li>
+          {% elif current_user.UType=='retailer' %}
+          <li class="sub-menu">
+            <a href="{{url_for('rDash')}}">
+              <i class="fa fa-dashboard"></i>
+              <span>Retailer's Dashboard</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a  href="{{url_for('getProduce')}}">
+              <i class="fa fa-leaf"></i>
+              <span>Get Produce</span>
+            </a>
+          </li>
+          {% endif %}
+
+
+          {% else %}
+
+          <li class="sub-menu">
+            <a href="{{url_for('login')}}">
+              <i class="fa fa-sign-in"></i>
+              <span>Login</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('signup')}}">
+              <i class="fa fa-phone-square"></i>
+              <span>Signup</span>
+            </a>
+          </li>
+
+          {% endif %}
+
+
+
+        </ul>
+        <!-- sidebar menu end-->
+      </div>
+    </aside>
+    <!--sidebar end-->
+    <!-- **********************************************************************************************************************************************************
+        MAIN CONTENT
+        *********************************************************************************************************************************************************** -->
+    <!--main content start-->
+    <section id="main-content">
+      <section class="wrapper">
+        <!-- page start-->
+        <div class="row mt">
+          <div class="col-sm-3">
+            <section class="panel">
+              <div class="panel-body">
+                <a href="{{url_for('newContract')}}" class="btn btn-compose">
+                  <i class="fa fa-pencil"></i> Add new contract
+                </a>
+                <ul class="nav nav-pills nav-stacked mail-nav">
+                  <li class="active"><a href="{{url_for('postContracts')}}"> <i class="fa fa-inbox"></i>Your Posts</a></li>
+                  <li><a href="{{url_for('applications')}}"> <i class="fa fa-tasks"></i>Applications</a></li>
+                  <li><a href="{{url_for('cdeals')}}">  <i class="fa fa-thumbs-o-up"></i> View Deals</a></li>
+                </ul>
+              </div>
+          
+            </section>
+            <section class="panel">
+              <div class="panel-body">
+                <ul class="nav nav-pills nav-stacked labels-info ">
+                  <li>
+                    <h4>Past Orders</h4>
+                  </li>
+                  <li>
+                    Checkout all your past orders
+                  </li>
+                  <br>
+                  <li>
+                    with complete details.
+                  </li>
+                  <br>
+                </ul>
+              </div>
+            </section>
+          </div>
+          <div class="col-sm-9">
+
+            <div class="content-panel">
+              <h4><i class="fa fa-angle-right"></i> Recent Applications</h4>
+              <section id="unseen">
+                <table class="table table-bordered table-striped table-condensed">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Crop</th>
+                      <th class="numeric">Total</th>
+                      <th>Seller</th>
+                      <th>Status</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    {% for data in details %}
+                    <tr>
+                      <td>{{data.Date}}</td>
+                      <td>{{data.Crop}}</td>
+                      <td>{{data.Total}}</td>
+                      <td>{{data.fEmail}}</td>
+                      <td>{{status}}
+                      </td>
+                    </tr>
+                    {% endfor %}
+
+
+                  </tbody>
+                </table>
+              </section>
+            </div>
+          </div>
+
+      </section>
+      <!-- /wrapper -->
+    </section>
+
+    <!--main content end-->
+    <!--footer start-->
+    <footer class="site-footer">
+      <div class="text-center">
+        <p>
+          &copy; Copyrights <strong>Cropwayy</strong>. All Rights Reserved
+        </p>
+        Created by team Cropwayy
+      </div>
+      <a href="about.html#" class="go-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+
+    </footer>
+    <!--footer end-->
+  </section>
+  <!-- js placed at the end of the document so the pages load faster -->
+  <script src="{{ url_for('static', filename='lib/jquery/jquery.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery-ui-1.9.2.custom.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.ui.touch-punch.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.ui.touch-punch.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.dcjqaccordion.2.7.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.scrollTo.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.nicescroll.js') }}" type="text/javascript"></script>
+
+  <script src="{{ url_for('static', filename='lib/advanced-datatable/js/jquery.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/advanced-datatable/js/jquery.dataTables.js') }}"
+    type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/advanced-datatable/js/DT_bootstrap.js') }}"
+    type="text/javascript"></script>
+
+
+
+
+  <!--common script for all pages-->
+
+  <script src="{{ url_for('static', filename='lib/common-scripts.js') }}" type="text/javascript"></script>
+
+  <!--script for this page-->
+
+</body>
+
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Dashboard">
+  <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+  <title>CROPWAYY | SIGNUP</title>
+
+  <!-- Favicons -->
+  <link href="img/favicon.png" rel="icon">
+  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href= "{{ url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}">    
+ 
+  <!--external css-->
+     <link rel="stylesheet" href= "{{ url_for('static', filename='lib/font-awesome/css/font-awesome.css') }}">   
+  <!-- Custom styles for this template -->
+
+         <link rel="stylesheet" href= "{{ url_for('static', filename='css/style.css') }}"> 
+         <link rel="stylesheet" href= "{{ url_for('static', filename='css/style-responsive.css') }}"> 
+ 
+  
+
+</head>
+
+<body>
+  <!-- **********************************************************************************************************************************************************
+      MAIN CONTENT
+      *********************************************************************************************************************************************************** -->
+  
+  <div id="login-page">
+    <div class="container">
+        <form name="sentMessage" class = "form-login" id="contactForm" action = "/signup_submit" method="post" novalidate>
+        <h2 class="form-login-heading">sign up now</h2>
+        <div class="login-wrap">
+          <input type="text" class="form-control" placeholder="Full Name" id="name" name='name' required data-validation-required-message="Please enter your name." autofocus><br>
+            <input type="text" class="form-control" placeholder="Email ID" id="email" name="email" required data-validation-required-message="Please enter your email address." >
+          <br>
+            <select name="type" id="type" class="form-control" required data-validation-required-message="Please choose the user type.">
+  <option selected="true" disabled="disabled">Select type</option>
+  
+  <option value="corporate">Corporate</option>
+  <option value="farmer">Farmer</option>
+  <option value="retailer">Retailer</option>
+  <option value="wholesaler">Wholesaler</option>
+  
+  
+</select>
+            <br>
+          <input type="password" class="form-control" placeholder="Password" id="password" name="password" pattern=".{8,15}" required title="8 characters minimum" required data-validation-required-message="Please enter your password" >
+          <br>
+            <input type="password" class="form-control" placeholder="Confirm Password" id="cpassword" name="cpassword" pattern=".{8,15}" required title="8 characters minimum" required data-validation-required-message="Please enter your password"  >
+            <br>
+          <button class="btn btn-theme btn-block" data-toggle="modal" href="login.html#myModal" type="submit"><i class="fa fa-lock"></i> SIGN UP</button>
+            <center>  <br>
+               {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="notification is-danger">
+                {{ messages[0] }} 
+            </div>
+        {% endif %}
+        {% endwith %}</center>
+          <hr>
+            <center>
+             Already Have An Account?<br/>
+            <a class="" a href="{{url_for('login')}}">
+              Login here
+              </a>
+            </center>
+        </div>
+   
+       <!-- Modal -->
+        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Successful!</h4>
+              </div>
+              <div class="modal-body">
+                <p>Congratulations, your account has been successfully created.</p><br>
+                  <p>Please Login to continue.</p>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-theme" type="button"><a href="index-copy.html">Home</a></button>
+                  <button class="btn btn-theme" type="button"><a href="login.html">Login</a></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- modal -->
+      </form>
+    </div>
+  </div>
+  <!-- js placed at the end of the document so the pages load faster -->
+ 
+      <link rel="text/javascript" href= "{{ url_for('static', filename='lib/jquery/jquery.min.js') }}"> 
+      <link rel="text/javascript" href= "{{ url_for('static', filename='lib/bootstrap/js/bootstrap.min.js') }}"> 
+
+       <link rel="text/javascript" href= "{{ url_for('static', filename='lib/jquery.backstretch.min.js') }}"> 
+  <script>
+    $.backstretch("'img/bg.jpg')", {speed: 500});
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Dashboard">
+  <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+  <title>CROPWAYY | FERTILIZER PREDICTION</title>
+
+  <!-- Favicons -->
+  <link href="{{ url_for('static', filename='img/favicon.png') }}" rel="icon">
+
+
+  <!-- Bootstrap core CSS -->
+  <link href="{{ url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <!--external css-->
+  <link href="{{ url_for('static', filename='lib/font-awesome/css/font-awesome.css') }}" rel="stylesheet" />
+  <!-- Custom styles for this template -->
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/style-responsive.css') }}" rel="stylesheet">
+
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/css/slick.min.css')}}">
+  <!--bootstrap css-->
+
+
+  <!--animate css-->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/css/slick.min.css') }}">
+  <!--main css-->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/css/slick.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/css/bootstrap-select.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/css/slick.min.css') }}">
+  <!--responsive css-->
+
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+    }
+    </script>
+    
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+  <style>
+    .card-test {
+      height: 70px;
+      width: 450px;
+
+      color: black;
+    }
+
+    .container-fluid-test {
+
+      height: 800px;
+      width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .pn {
+      height: 700px;
+      width: 1250px;
+      margin: auto;
+
+    }
+  </style>
+
+
+
+</head>
+
+<body>
+  <section id="container">
+    <!-- **********************************************************************************************************************************************************
+        TOP BAR CONTENT & NOTIFICATIONS
+        *********************************************************************************************************************************************************** -->
+    <!--header start-->
+    <header class="header black-bg">
+      <div class="sidebar-toggle-box">
+        <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+      </div>
+      <!--logo start-->
+      <span class="notranslate"> <a href="{{url_for('home')}}" class="logo"><b>CROP<span>WAYY</span></b></a></span>
+
+      {% if current_user.is_authenticated %}
+
+      <div class="top-menu">
+        <ul class="nav pull-right top-menu">
+          <li><a class="logout" href="{{url_for('logout')}}">Logout</a></li>
+        </ul>
+      </div>
+      {% else %}
+      <div class="top-menu">
+        <ul class="nav pull-right top-menu">
+          <li><a class="logout" href="{{url_for('login')}}">Login</a></li>
+        </ul>
+      </div>
+      {% endif %}
+    </header>
+    <!--header end-->
+    <!-- **********************************************************************************************************************************************************
+        MAIN SIDEBAR MENU
+        *********************************************************************************************************************************************************** -->
+    <!--sidebar start-->
+    <aside>
+      <div id="sidebar" class="nav-collapse ">
+        <!-- sidebar menu start-->
+        <ul class="sidebar-menu" id="nav-accordion">
+          <p class="centered"> {% if current_user.is_authenticated %}
+            {% if current_user.UType=='farmer' %}
+            <img src="{{ url_for('static', filename='img/f_user.jpg') }}" class="img-circle" width="80">
+            {% elif current_user.UType=='corporate' %}
+            <img src="{{ url_for('static', filename='img/c_user.png') }}" class="img-circle" width="80">
+
+            {% elif current_user.UType=='admin' %}
+
+            <img src="{{ url_for('static', filename='img/a_user.jpg') }}" class="img-circle" width="80">
+            {% endif %}
+            {% else %}
+            <img src="{{ url_for('static', filename='img/favicon.png') }}" class="img-circle" width="80">
+            {% endif %}
+
+
+
+          </p>
+          <h5 class="centered">
+
+            {% if current_user.is_authenticated %}
+            {% if current_user.UType=='farmer' %}
+            <a href="{{url_for('fprofile')}}"> {{ current_user.FullName}} </a>
+            {% elif current_user.UType=='corporate' %}
+            <a href="{{url_for('cprofile')}}"> {{ current_user.FullName}} </a>
+            {% elif current_user.UType=='admin' %}
+            <a href="{{url_for('cprofile')}}"> {{ current_user.FullName}} </a>
+            {% elif current_user.UType=='retailer' %}
+            <a href="{{url_for('rprofile')}}"> {{ current_user.FullName}} </a>
+            {% elif current_user.UType=='wholesaler' %}
+            <a href="{{url_for('wprofile')}}"> {{ current_user.FullName}} </a>
+            {% endif %}
+            {% else %}
+            Cropwian
+            {% endif %}
+          </h5>
+          <li class="mt">
+            <a href="{{url_for('home')}}">
+              <i class="fa fa-home"></i>
+              <span>Home</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('aboutus')}}">
+              <i class="fa fa-globe"></i>
+              <span>About Us</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('gallery')}}">
+              <i class="fa fa-camera"></i>
+              <span>Gallery</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('contactus')}}">
+              <i class="fa fa-phone-square"></i>
+              <span>Contact Us</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('farmstore')}}">
+              <i class="fa fa-shopping-cart"></i>
+              <span>Farm Store</span>
+            </a>
+          </li>
+          {% if current_user.is_authenticated %}
+          {% if current_user.UType=='farmer' %}
+          <li class="sub-menu">
+            <a  href="{{url_for('farmBot')}}">
+              <i class='fas fa-robot'></i>
+              <span>farmBot</span>
+              </a>
+              </li>
+          <li class="sub-menu">
+            <a href="{{url_for('fDash')}}">
+              <i class="fa fa-dashboard"></i>
+              <span>Farmer's Dashboard</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a class='active' href="javascript:;">
+              <i class="fa fa-desktop"></i>
+              <span>Smart Farming</span>
+            </a>
+            <ul class="sub">
+              <li><a href="{{url_for('prediction')}}">Predict Disease</a></li>
+              <li><a href="{{url_for('cropRec')}}">Crop Recommendation</a></li>
+              <li class='active'><a href="{{url_for('fertilizer')}}">Fertilizers</a></li>
+              <li><a href="{{url_for('flower')}}">Flower Species</a></li>
+              <li><a href="{{url_for('tips')}}">Everyday Tips</a></li>
+              <li><a href="{{url_for('govtScheme')}}">Govt. Schemes</a></li>
+            </ul>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('fDash')}}">
+              <i class="fa-inr"></i>
+              <span>Sell Crops</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('fDash')}}">
+              <i class="fa-pencil-square-o"></i>
+              <span>Get Contracts</span>
+            </a>
+          </li>
+          {% elif current_user.UType=='corporate' %}
+          <li class="sub-menu">
+            <a href="{{url_for('cDash')}}">
+              <i class="fa fa-dashboard"></i>
+              <span>Corporate's Dashboard</span>
+            </a>
+          </li>
+          {% elif current_user.UType=='admin' %}
+          <li class="sub-menu">
+            <a href="{{url_for('cDash')}}">
+              <i class="fa fa-dashboard"></i>
+              <span>Admin's Dashboard</span>
+            </a>
+          </li>
+          {% endif %}
+
+
+          {% else %}
+
+          <li class="sub-menu">
+            <a href="{{url_for('login')}}">
+              <i class="fa fa-sign-in"></i>
+              <span>Login</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('signup')}}">
+              <i class="fa fa-phone-square"></i>
+              <span>Signup</span>
+            </a>
+          </li>
+
+          {% endif %}
+        </ul>
+        <!-- sidebar menu end-->
+      </div>
+    </aside>
+    <!--sidebar end-->
+    <!-- **********************************************************************************************************************************************************
+        MAIN CONTENT
+        *********************************************************************************************************************************************************** -->
+    <!--main content start-->
+    <section id="main-content">
+      <section class="wrapper site-min-height">
+        <h3>Hi, Cropwian! Know the right fertilizer for your crop</h3>
+        <div class="col-md-4 col-sm-4 mb">
+          <!-- REVENUE PANEL -->
+          <div class="green-panel pn">
+            <div class="green-header" height=50px>
+              <h5><B>Fertilizer Prediction</B></h5>
+            </div>
+            <div class="chart mt">
+              <div class="sparkline" data-type="line" data-resize="true" data-height="75" data-width="90%"
+                data-line-width="100" data-line-color="#fff" data-spot-color="#fff" data-fill-color=""
+                data-highlight-line-color="#fff" data-spot-radius="4"
+                data-data="[200,135,667,333,526,996,564,123,890,464,655]"></div>
+            </div>
+
+            <div class="container-fluid-test">
+              <center>
+                <form action="\fert_rec
+                      " method="post">
+
+                  <div class="row">
+                    <br>
+                    <div class="col-sm-6">
+                      <div class="card-test">
+
+                        <h5 class="card-title"><B>Nitrogen (N)</B></h5>
+                        <!-- HTP -->
+                        <input type="number" name="n" id="n" placeholder="Enter the value of Nitrogen"
+                          required="required" class="form-control">
+                      </div>
+                    </div>
+
+
+
+                    <div class="col-sm-6">
+                      <div class="card-test">
+                        <div class="card-body">
+                          <h5 class="card-title"><B>Phosphorous (P)</B></h5>
+                          <!-- HTP -->
+                          <input type="number" name="p" id="p" placeholder="Enter the value of Phosphorous"
+                            required="required" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <br>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="card-test">
+                        <div class="card-body">
+                          <h5 class="card-title"><B>Potassium (K)</B></h5>
+                          <!-- HTP -->
+                          <input type="number" name="k" id="k" placeholder="Enter the value of Potassium"
+                            required="required" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+
+
+
+                    <div class="col-sm-6">
+                      <div class="card-test">
+                        <div class="card-body">
+                          <h5 class="card-title"><B>Temperature</B></h5>
+                          <!-- HTP -->
+                          <input type="number" name="t" id="t" placeholder="Enter the value of Temperature(Celcius)"
+                            required="required" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="card-test">
+                        <div class="card-body">
+                          <h5 class="card-title"><B>Humidity</B></h5>
+                          <!-- HTP -->
+                          <input type="number" name="hum" id="hum" placeholder="Enter the value of Humidity"
+                            required="required" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="card-test">
+                        <div class="card-body">
+                          <h5 class="card-title"><B>Moisture</B></h5>
+                          <!-- HTP -->
+                          <input type="number" name="m" id="m" placeholder="Enter the value of moisture"
+                            required="required" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+
+                    <div class="col-sm-6">
+                      <div class="card-test">
+                        <div class="card-body">
+                          <h5 class="card-title"><B>Soil Type</B></h5>
+                          <select name="s" id="s" class="form-control">
+                            <option selected disabled>Choose soil type </option>
+                            <option value='a'>Sandy</option>
+                            <option value='b'>Loamy</option>
+                            <option value='c'>Red</option>
+                            <option value='d'>Black</option>
+                            <option value='e'>Clayey</option>
+
+                          </select>
+                        </div>
+                      </div>
+
+
+                    </div>
+
+                    <div class="col-sm-6">
+                      <div class="card-test">
+                        <div class="card-body">
+                          <h5 class="card-title"><B>Crop</B></h5>
+                          <select name="crop" id="crop" class="form-control">
+                            <option selected disabled>Choose crop </option>
+                            <option value='a'>Maize</option>
+                            <option value='b'>Cotton</option>
+                            <option value='c'>Paddy</option>
+                            <option value='d'>Barley</option>
+                            <option value='e'>Sugarcane</option>
+                            <option value='f'>Tobacco</option>
+                            <option value='g'>Pulses</option>
+                            <option value='h'>Wheat</option>
+                            <option value='i'>Millets</option>
+                            <option value='j'>Oil Seeds</option>
+                            <option value='k'>Ground Nuts</option>
+
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+
+                  </div>
+                  <br>
+                  <br>
+                  <div class="form-group">
+
+
+                    <input type="submit" value="Submit" class="btn btn-default btn-lg btn-block">
+
+                  </div>
+
+
+
+                  <h1>{{pred_text_crop}}</h1><br>
+
+                </form>
+              </center>
+
+
+
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+      <!-- /wrapper -->
+    </section>
+    <!-- /MAIN CONTENT -->
+    <!--main content end-->
+    <!--footer start-->
+    <footer class="site-footer">
+      <div class="text-center">
+        <p>
+          &copy; Copyrights <strong>Cropwayy</strong>. All Rights Reserved
+        </p>
+        <div class="credits">
+
+          Created by team Cropwayy
+        </div>
+        <a href="farmstore.html#" class="go-top">
+          <i class="fa fa-angle-up"></i>
+        </a>
+      </div>
+    </footer>
+    <!--footer end-->
+  </section>
+  <script src="{{ url_for('static', filename='lib/jquery/jquery.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery-ui-1.9.2.custom.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.ui.touch-punch.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.ui.touch-punch.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.dcjqaccordion.2.7.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.scrollTo.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.nicescroll.js') }}" type="text/javascript"></script>
+
+
+
+
+
+  <!--common script for all pages-->
+  <script src="{{ url_for('static', filename='lib/common-scripts.js') }}" type="text/javascript"></script>
+
+
+</body>
+
+</html>

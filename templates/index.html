@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Dashboard">
+  <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+  <title>CROPWAYY</title>
+
+
+  <link href="{{ url_for('static', filename='img/favicon.ico') }}" rel="icon">
+
+
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}">
+
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='lib/font-awesome/css/font-awesome.css') }}">
+
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style-responsive.css') }}">
+  <style>
+    /* Slideshow container */
+    .slideshow-container {
+      position: relative;
+      background: #f1f1f1f1;
+    }
+
+    /* Slides */
+    .mySlides {
+      display: none;
+      padding: 80px;
+      text-align: center;
+    }
+
+    /* Next & previous buttons */
+    .prev,
+    .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      width: auto;
+      margin-top: -30px;
+      padding: 16px;
+      color: #888;
+      font-weight: bold;
+      font-size: 20px;
+      border-radius: 0 3px 3px 0;
+      user-select: none;
+    }
+
+    /* Position the "next button" to the right */
+    .next {
+      position: absolute;
+      right: 0;
+      border-radius: 3px 0 0 3px;
+    }
+
+    /* On hover, add a black background color with a little bit see-through */
+    .prev:hover,
+    .next:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+    }
+
+    /* The dot/bullet/indicator container */
+    .dot-container {
+      text-align: center;
+      padding: 20px;
+      background: #ddd;
+    }
+
+    /* The dots/bullets/indicators */
+    .dot {
+      cursor: pointer;
+      height: 15px;
+      width: 15px;
+      margin: 0 2px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      transition: background-color 0.6s ease;
+    }
+
+    /* Add a background color to the active dot/circle */
+    .active,
+    .dot:hover {
+      background-color: #717171;
+    }
+
+    /* Add an italic font style to all quotes */
+    q {
+      font-style: italic;
+    }
+
+    /* Add a blue color to the author */
+    .author {
+      color: cornflowerblue;
+    }
+  </style>
+
+</head>
+
+<body>
+  <section id="container">
+    <!-- **********************************************************************************************************************************************************
+        TOP BAR CONTENT & NOTIFICATIONS
+        *********************************************************************************************************************************************************** -->
+    <!--header start-->
+    <header class="header black-bg">
+      <div class="sidebar-toggle-box">
+        <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+      </div>
+
+      <a href="index.html" class="logo"><b>CROP<span>WAYY</span></b></a>
+
+      {% if current_user.is_authenticated %}
+
+      <div class="top-menu">
+        <ul class="nav pull-right top-menu">
+          <li><a class="logout" href="{{url_for('logout')}}">Logout</a></li>
+        </ul>
+      </div>
+      {% else %}
+      <div class="top-menu">
+        <ul class="nav pull-right top-menu">
+          <li><a class="logout" href="{{url_for('login')}}">Login</a></li>
+        </ul>
+      </div>
+      {% endif %}
+    </header>
+
+
+    <!--header end-->
+    <!-- **********************************************************************************************************************************************************
+        MAIN SIDEBAR MENU
+        *********************************************************************************************************************************************************** -->
+    <!--sidebar start-->
+    <aside>
+      <div id="sidebar" class="nav-collapse ">
+        <ul class="sidebar-menu" id="nav-accordion">
+          <p class="centered">
+            {% if current_user.is_authenticated %}
+            {% if current_user.UType=='farmer' %}
+            <img src="{{ url_for('static', filename='img/f_user.jpg') }}" class="img-circle" width="80">
+            {% elif current_user.UType=='corporate' %}
+            <img src="{{ url_for('static', filename='img/c_user.png') }}" class="img-circle" width="80">
+
+            {% elif current_user.UType=='admin' %}
+
+            <img src="{{ url_for('static', filename='img/a_user.jpg') }}" class="img-circle" width="80">
+            {% endif %}
+            {% else %}
+            <img src="{{ url_for('static', filename='img/favicon.png') }}" class="img-circle" width="80">
+            {% endif %}
+
+
+
+          </p>
+          <h5 class="centered">
+
+            {% if current_user.is_authenticated %}
+            {% if current_user.UType=='farmer' %}
+            <a href="{{url_for('fprofile')}}"> {{ current_user.FullName}} </a>
+            {% elif current_user.UType=='corporate' %}
+            <a href="{{url_for('cprofile')}}"> {{ current_user.FullName}} </a>
+            {% elif current_user.UType=='admin' %}
+            <a href="{{url_for('cprofile')}}"> {{ current_user.FullName}} </a>
+            {% elif current_user.UType=='retailer' %}
+            <a href="{{url_for('rprofile')}}"> {{ current_user.FullName}} </a>
+            {% elif current_user.UType=='wholesaler' %}
+            <a href="{{url_for('wprofile')}}"> {{ current_user.FullName}} </a>
+            {% endif %}
+            {% else %}
+            Cropwian
+            {% endif %}
+          </h5>
+          <li class="mt">
+            <a class="active" href="{{url_for('home')}}">
+              <i class="fa fa-home"></i>
+              <span>Home</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('aboutus')}}">
+              <i class="fa fa-globe"></i>
+              <span>About Us</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('gallery')}}">
+              <i class="fa fa-camera"></i>
+              <span>Gallery</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('contactus')}}">
+              <i class="fa fa-phone-square"></i>
+              <span>Contact Us</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('farmstore')}}">
+              <i class="fa fa-shopping-cart"></i>
+              <span>Farm Store</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('farmBot')}}">
+              <i class="fas fa-robot"></i>
+              <span>farmBot</span>
+            </a>
+          </li>
+          {% if current_user.is_authenticated %}
+          {% if current_user.UType=='farmer' %}
+          <li class="sub-menu">
+            <a href="{{url_for('fDash')}}">
+              <i class="fa fa-dashboard"></i>
+              <span>Farmer's Dashboard</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="javascript:;">
+              <i class="fa fa-desktop"></i>
+              <span>Our Services</span>
+            </a>
+            <ul class="sub">
+              <li><a href="{{url_for('prediction')}}">Predict Disease</a></li>
+              <li><a href="{{url_for('cropRec')}}">Crop Recommendation</a></li>
+              <li><a href="{{url_for('fertilizer')}}">Fertilizers</a></li>
+              <li><a href="{{url_for('flower')}}">Flower Species</a></li>
+              <li><a href="{{url_for('tips')}}">Everyday Tips</a></li>
+              <li><a href="{{url_for('govtScheme')}}">Govt. Schemes</a></li>
+            </ul>
+          </li>
+          {% elif current_user.UType=='corporate' %}
+          <li class="sub-menu">
+            <a href="{{url_for('cDash')}}">
+              <i class="fa fa-dashboard"></i>
+              <span>Corporate's Dashboard</span>
+            </a>
+          </li>
+          {% elif current_user.UType=='admin' %}
+          <li class="sub-menu">
+            <a href="{{url_for('cDash')}}">
+              <i class="fa fa-dashboard"></i>
+              <span>Admin's Dashboard</span>
+            </a>
+          </li>
+          {% endif %}
+
+
+          {% else %}
+
+          <li class="sub-menu">
+            <a href="{{url_for('login')}}">
+              <i class="fa fa-sign-in"></i>
+              <span>Login</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('signup')}}">
+              <i class="fa fa-phone-square"></i>
+              <span>Signup</span>
+            </a>
+          </li>
+
+          {% endif %}
+
+        </ul>
+      </div>
+    </aside>
+    <!--sidebar end-->
+    <!-- **********************************************************************************************************************************************************
+        MAIN CONTENT
+        *********************************************************************************************************************************************************** -->
+    <!--main content start-->
+    <section id="main-content">
+      <section class="wrapper">
+        <div class="row">
+          <div class="col-lg-9 main-chart">
+
+            <div class="center-desk">
+              <div class="logo">
+                <a href="index.html"><img src="{{ url_for('static',filename='img/banner.gif') }}" alt="logo"
+                    height=300px margin=auto padding=10px /></a>
+              </div>
+            </div>
+            <hr>
+
+
+            <!--custom chart end-->
+            <div class="row mt">
+              <!-- SERVER STATUS PANELS -->
+              <div class="col-md-4 col-sm-4 mb">
+                <div class="grey-panel pn donut-chart">
+                  <div class="grey-header">
+                    <h5>FARMER'S PORTAL</h5>
+                  </div>
+
+                  <img src="{{ url_for('static',filename='img/farmer_clip.jpg') }}" height="110" width="130">
+                  <div class="row">
+                    <div class="col-sm-6 col-xs-6 goleft">
+                      <p>Registered <br />Farmers:</p>
+                    </div>
+                    <div class="col-sm-6 col-xs-6">
+                      <h2>10251</h2>
+                    </div>
+                  </div>
+                </div>
+                <!-- /grey-panel -->
+              </div>
+              <!-- /col-md-4-->
+              <div class="col-md-4 col-sm-4 mb">
+                <div class="darkblue-panel pn">
+                  <div class="darkblue-header">
+                    <h5>CORPORATE'S PORTAL</h5>
+                  </div>
+                  <img src="{{ url_for('static',filename='img/corporate_count.png') }}" height="130" width="130">
+                  <footer>
+                    <div class="pull-left">
+                      <h5><i class="fa fa-hdd-o"></i> Sell your crops to the biggest corporates</h5>
+                    </div>
+                    <div class="pull-right">
+
+                    </div>
+                  </footer>
+                </div>
+                <!--  /darkblue panel -->
+              </div>
+              <!-- /col-md-4 -->
+              <div class="col-md-4 col-sm-4 mb">
+                <!-- REVENUE PANEL -->
+                <div class="green-panel pn">
+                  <div class="green-header">
+                    <h5>Counters</h5>
+                  </div>
+
+
+                  <img src="{{ url_for('static',filename='img/user_count.png') }}" height="110" width="130">
+                  <p class="mt"> <a href='http://www.freevisitorcounters.com'></a>
+                    <script type='text/javascript'
+                      src='https://www.freevisitorcounters.com/auth.php?id=a113a4ef1dd015694bcc753355dc0539f3edfe5e'></script>
+                    <script type="text/javascript"
+                      src="https://freevisitorcounters.com/en/home/counter/818384/t/13"></script>
+                  </p>
+                </div>
+              </div>
+              <!-- /col-md-4 -->
+            </div>
+            <hr>
+            <!-- /row -->
+            <div class="row">
+              <!-- WEATHER PANEL -->
+              <div class="col-md-4 mb">
+                <div class="weather pn">
+                </div>
+              </div>
+              <!-- /col-md-4-->
+              <!-- DIRECT MESSAGE PANEL -->
+              <div class="col-md-8 mb">
+                <div class="message-p pn">
+                  <div class="message-header">
+                    <h5>Farmer</h5>
+                  </div>
+                  <div class="row">
+
+                    <div class="col-md-12">
+
+                      <p class="message">In the present socio-economic structure, farmers are the backbone of the
+                        society. Almost all the food items taken by us are produced by the farmers. Hence, whole
+                        population of the country depends upon the farmers. Farmers are the backbone of all the
+                        countries in the world irrespective of their locations.</p>
+                      <p>
+                        <name>We at Cropwayy provide you with <a
+                            href="https://hi.wikipedia.org/wiki/%E0%A4%95%E0%A5%83%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A4%BF%E0%A4%AE_%E0%A4%AC%E0%A5%81%E0%A4%A6%E0%A5%8D%E0%A4%A7%E0%A4%BF#:~:text=%E0%A4%95%E0%A5%83%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A4%BF%E0%A4%AE%20%E0%A4%AC%E0%A5%81%E0%A4%A6%E0%A5%8D%E0%A4%A7%E0%A4%BF%20(%E0%A4%86%E0%A4%B0%E0%A5%8D%E0%A4%9F%E0%A4%BF%E0%A4%AB%E0%A4%BC%E0%A4%BF%E0%A4%B6%E0%A4%BF%E0%A4%AF%E0%A4%B2%20%E0%A4%87%E0%A4%82%E0%A4%9F%E0%A5%87%E0%A4%B2%E0%A4%BF%E0%A4%9C%E0%A5%87%E0%A4%82%E0%A4%B8%20%E0%A4%AF%E0%A4%BE,%E0%A4%AE%E0%A4%B6%E0%A5%80%E0%A4%A8%E0%A5%8B%E0%A4%82%20%E0%A4%A6%E0%A5%8D%E0%A4%B5%E0%A4%BE%E0%A4%B0%E0%A4%BE%20%E0%A4%AA%E0%A5%8D%E0%A4%B0%E0%A4%A6%E0%A4%B0%E0%A5%8D%E0%A4%B6%E0%A4%BF%E0%A4%A4%20%E0%A4%AC%E0%A5%81%E0%A4%A6%E0%A5%8D%E0%A4%A7%E0%A4%BF%20%E0%A4%B9%E0%A5%88%E0%A5%A4&text=%E0%A4%95%E0%A5%83%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A4%BF%E0%A4%AE%20%E0%A4%AC%E0%A5%81%E0%A4%A6%E0%A5%8D%E0%A4%A7%E0%A4%BF%2C%20%E0%A4%95%E0%A4%82%E0%A4%AA%E0%A5%8D%E0%A4%AF%E0%A5%82%E0%A4%9F%E0%A4%B0%20%E0%A4%B5%E0%A4%BF%E0%A4%9C%E0%A5%8D%E0%A4%9E%E0%A4%BE%E0%A4%A8%20%E0%A4%95%E0%A5%80,%E0%A4%95%E0%A5%87%20%E0%A4%B8%E0%A4%BE%E0%A4%A5%20%E0%A4%B5%E0%A4%BF%E0%A4%95%E0%A4%B8%E0%A4%BF%E0%A4%A4%20%E0%A4%95%E0%A4%B0%E0%A4%A4%E0%A4%BE%20%E0%A4%B9%E0%A5%88%E0%A5%A4">AI
+                            based</a> services such as disease prediction in crops, crop recommendation, fertilizer
+                          calculator, flower species, everyday tips and much more.</name> <br>
+
+                        <name>You can now buy necessary equipments for farming at Cropwayy.</name><br>
+                        <name>Now, sell your harvest at <a href="https://farmer.gov.in/mspstatements.aspx"> MSP</a>, we
+                          do not allow anyone to buy or sell below the MSP.</name><br>
+
+                        <name>Sign farming contacts with leading corporates at industry standard price.</name>
+                        <br>
+
+                        <name>You can ask questions regarding farming to our experts and <a
+                            href="https://en.wikipedia.org/wiki/Chatbot">chatbot. </a> </name>
+
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- /Message Panel-->
+              </div>
+              <!-- /col-md-8  -->
+            </div>
+            <div class="row">
+              <!-- WEATHER PANEL -->
+
+
+              <!-- /col-md-4-->
+              <!-- DIRECT MESSAGE PANEL -->
+              <div class="col-md-8 mb">
+                <div class="message-p pn">
+                  <div class="message-header">
+                    <h5>Corporate</h5>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 centered hidden-sm hidden-xs">
+
+                    </div>
+                    <div class="col-md-12">
+                      <p>
+
+                      <p class="message">Corporate farming is the business based on agriculture. It is a modern food
+                        industry which encompasses the use of products for the company itself, and entire chain of
+                        agriculture-related business.</p>
+                      <p>
+                        <name>Cropwayy provides a platform for corporates to buy harvest directly from the farmers at no
+                          additional cost.</name><br>
+                        <name>Corporates can now hire farmers on contract basis.</name>
+
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- /Message Panel-->
+              </div>
+
+              <div class="col-md-4 mb">
+                <div class="corp pn">
+
+                </div>
+              </div>
+
+            
+              <hr>
+
+
+              <!-- /col-md-8  -->
+            </div>
+            <div class="row">
+              <!-- TWITTER PANEL -->
+              <div class="slideshow-container">
+
+                <div class="mySlides">
+                  <q>testimonials about Cropwayy</q>
+                  <p class="author">- Virtual person</p>
+                </div>
+
+                <div class="mySlides">
+                  <q>testimonials about Cropwayy</q>
+                  <p class="author">- Virtual person</p>
+                </div>
+
+                <div class="mySlides">
+                  <q>testimonials about Cropwayy</q>
+                  <p class="author">- Virtual person</p>
+                </div>
+
+                <a class="prev" onclick="plusSlides(-1)">❮</a>
+                <a class="next" onclick="plusSlides(1)">❯</a>
+
+              </div>
+
+              <div class="dot-container">
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+              </div>
+              <!-- /col-md-4 -->
+
+              <!-- /col-md-4 -->
+            </div>
+            <!-- /row -->
+
+            <!-- /row -->
+          </div>
+          <!-- /col-lg-9 END SECTION MIDDLE -->
+          <!-- **********************************************************************************************************************************************************
+              RIGHT SIDEBAR CONTENT
+              *********************************************************************************************************************************************************** -->
+          <div class="col-lg-3 ds">
+            <!--COMPLETED ACTIONS DONUTS CHART-->
+
+            <h2 align='center'>TEMPERATURE</h2>
+            <br>
+            <div class="donut-main">
+              <a class="weatherwidget-io" href="https://forecast7.com/en/28d6677d23/delhi/" data-label_1="DELHI"
+                data-label_2="WEATHER" data-theme="original">DELHI WEATHER</a>
+              <script>
+                !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = 'https://weatherwidget.io/js/widget.min.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'weatherwidget-io-js');
+              </script>
+              <h4>farmStore</h4>
+              <img src="{{ url_for('static',filename='img/farmStore.png') }}" height="650" width="220"><br>
+
+
+
+              <!-- /col-lg-3 -->
+            </div>
+          </div>
+          <!-- /row -->
+      </section>
+    </section>
+    <!--main content end-->
+    <!--footer start-->
+    <footer class="site-footer">
+      <div class="text-center">
+        <p>
+          &copy; Copyrights <strong>Cropwayy</strong>. All Rights Reserved
+        </p>
+
+        Created by team Cropwayy
+      </div>
+      <a href="index.html#" class="go-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+    </footer>
+
+  </section>
+
+  <script src="{{ url_for('static', filename='lib/jquery/jquery.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery-ui-1.9.2.custom.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.ui.touch-punch.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.ui.touch-punch.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.dcjqaccordion.2.7.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.scrollTo.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.nicescroll.js') }}" type="text/javascript"></script>
+
+
+
+  <!--common script for all pages-->
+  <script src="{{ url_for('static', filename='lib/common-scripts.js') }}" type="text/javascript"></script>
+
+  <!--script for this page-->
+  <script type="text/javascript">
+    $(document).ready(function () {
+      var unique_id = $.gritter.add({
+        // (string | mandatory) the heading of the notification
+        title: 'Welcome to Dashio!',
+        // (string | mandatory) the text inside the notification
+        text: 'Hover me to enable the Close Button. You can hide the left sidebar clicking on the button next to the logo. Developed by <a href="http://alvarez.is" target="_blank" style="color:#4ECDC4">Alvarez.is</a>.',
+        // (string | optional) the image to display on the left
+        image: 'img/ui-sam.jpg',
+        // (bool | optional) if you want it to fade out on its own or just sit there
+        sticky: false,
+        // (int | optional) the time you want it to be alive for before fading out
+        time: 8000,
+        // (string | optional) the class name you want to apply to that specific message
+        class_name: 'my-sticky-class'
+      });
+
+      return false;
+    });
+  </script>
+  <script type="application/javascript">
+    $(document).ready(function () {
+      $("#date-popover").popover({
+        html: true,
+        trigger: "manual"
+      });
+      $("#date-popover").hide();
+      $("#date-popover").click(function (e) {
+        $(this).hide();
+      });
+
+      $("#my-calendar").zabuto_calendar({
+        action: function () {
+          return myDateFunction(this.id, false);
+        },
+        action_nav: function () {
+          return myNavFunction(this.id);
+        },
+        ajax: {
+          url: "show_data.php?action=1",
+          modal: true
+        },
+        legend: [{
+          type: "text",
+          label: "Special event",
+          badge: "00"
+        },
+        {
+          type: "block",
+          label: "Regular event",
+        }
+        ]
+      });
+    });
+
+    function myNavFunction(id) {
+      $("#date-popover").hide();
+      var nav = $("#" + id).data("navigation");
+      var to = $("#" + id).data("to");
+      console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
+    }
+  </script>
+  <script>
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+      var i;
+      var slides = document.getElementsByClassName("mySlides");
+      var dots = document.getElementsByClassName("dot");
+      if (n > slides.length) { slideIndex = 1 }
+      if (n < 1) { slideIndex = slides.length }
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex - 1].style.display = "block";
+      dots[slideIndex - 1].className += " active";
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Dashboard">
+  <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+  <title>CROPWAYY | GOVT. SCHEME</title>
+
+  <!-- Favicons -->
+  <link href="{{ url_for('static', filename='img/favicon.png') }}" rel="icon">
+
+
+  <!-- Bootstrap core CSS -->
+  <link href="{{ url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <!--external css-->
+  <link href="{{ url_for('static', filename='lib/font-awesome/css/font-awesome.css') }}" rel="stylesheet" />
+  <!-- Custom styles for this template -->
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/style-responsive.css') }}" rel="stylesheet">
+
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/css/slick.min.css')}}">
+  <!--bootstrap css-->
+
+
+  <!--animate css-->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/css/slick.min.css') }}">
+  <!--main css-->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/css/slick.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/css/bootstrap-select.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/css/slick.min.css') }}">
+  <!--responsive css-->
+
+  <style>
+    .pn {
+      height: 1500px;
+      margin: auto;
+      width: 1250px;
+      background-color: darkturquoise;
+    }
+
+    .collapsible {
+      background-color: black;
+      color: white;
+      cursor: pointer;
+      padding: 18px;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;
+    }
+
+    .active,
+    .collapsible:hover {
+      background-color: darkorange;
+    }
+
+    .content {
+      padding: 0 18px;
+      display: none;
+      overflow: hidden;
+      background-color: #f1f1f1;
+    }
+
+    .center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 90%;
+    }
+  </style>
+
+</head>
+
+<body>
+  <section id="container">
+    <!-- **********************************************************************************************************************************************************
+        TOP BAR CONTENT & NOTIFICATIONS
+        *********************************************************************************************************************************************************** -->
+    <!--header start-->
+    <header class="header black-bg">
+      <div class="sidebar-toggle-box">
+        <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+      </div>
+      <!--logo start-->
+      <span class="notranslate"> <a href="{{url_for('home')}}" class="logo"><b>CROP<span>WAYY</span></b></a></span>
+
+      {% if current_user.is_authenticated %}
+
+      <div class="top-menu">
+        <ul class="nav pull-right top-menu">
+          <li><a class="logout" href="{{url_for('logout')}}">Logout</a></li>
+        </ul>
+      </div>
+      {% else %}
+      <div class="top-menu">
+        <ul class="nav pull-right top-menu">
+          <li><a class="logout" href="{{url_for('login')}}">Login</a></li>
+        </ul>
+      </div>
+      <div id="google_translate_element"></div>
+      {% endif %}
+    </header>
+    <!--header end-->
+    <!-- **********************************************************************************************************************************************************
+        MAIN SIDEBAR MENU
+        *********************************************************************************************************************************************************** -->
+    <!--sidebar start-->
+    <aside>
+      <div id="sidebar" class="nav-collapse ">
+        <!-- sidebar menu start-->
+        <ul class="sidebar-menu" id="nav-accordion">
+          <p class="centered"> {% if current_user.is_authenticated %}
+            {% if current_user.UType=='farmer' %}
+            <img src="{{ url_for('static', filename='img/f_user.jpg') }}" class="img-circle" width="80">
+            {% elif current_user.UType=='corporate' %}
+            <img src="{{ url_for('static', filename='img/c_user.png') }}" class="img-circle" width="80">
+
+            {% elif current_user.UType=='admin' %}
+
+            <img src="{{ url_for('static', filename='img/a_user.jpg') }}" class="img-circle" width="80">
+            {% endif %}
+            {% else %}
+            <img src="{{ url_for('static', filename='img/favicon.png') }}" class="img-circle" width="80">
+            {% endif %}
+
+
+
+          </p>
+          <h5 class="centered">
+
+            {% if current_user.is_authenticated %}
+            {% if current_user.UType=='farmer' %}
+            <a href="{{url_for('fprofile')}}"> {{ current_user.FullName}} </a>
+            {% elif current_user.UType=='corporate' %}
+            <a href="{{url_for('cprofile')}}"> {{ current_user.FullName}} </a>
+            {% elif current_user.UType=='admin' %}
+            <a href="{{url_for('cprofile')}}"> {{ current_user.FullName}} </a>
+            {% elif current_user.UType=='retailer' %}
+            <a href="{{url_for('rprofile')}}"> {{ current_user.FullName}} </a>
+            {% elif current_user.UType=='wholesaler' %}
+            <a href="{{url_for('wprofile')}}"> {{ current_user.FullName}} </a>
+            {% endif %}
+            {% else %}
+            Cropwian
+            {% endif %}
+          </h5>
+          <li class="mt">
+            <a href="{{url_for('home')}}">
+              <i class="fa fa-home"></i>
+              <span>Home</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('aboutus')}}">
+              <i class="fa fa-globe"></i>
+              <span>About Us</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('gallery')}}">
+              <i class="fa fa-camera"></i>
+              <span>Gallery</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('contactus')}}">
+              <i class="fa fa-phone-square"></i>
+              <span>Contact Us</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('farmstore')}}">
+              <i class="fa fa-shopping-cart"></i>
+              <span>Farm Store</span>
+            </a>
+          </li>
+          {% if current_user.is_authenticated %}
+          {% if current_user.UType=='farmer' %}
+          <li class="sub-menu">
+            <a href="{{url_for('fDash')}}">
+              <i class="fa fa-dashboard"></i>
+              <span>Farmer's Dashboard</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a class='active' href="javascript:;">
+              <i class="fa fa-desktop"></i>
+              <span>Smart Farming</span>
+            </a>
+            <ul class="sub">
+              <li><a href="{{url_for('prediction')}}">Predict Disease</a></li>
+              <li><a href="{{url_for('cropRec')}}">Crop Recommendation</a></li>
+              <li><a href="{{url_for('fertilizer')}}">Fertilizers</a></li>
+              <li><a href="{{url_for('flower')}}">Flower Species</a></li>
+              <li class='active'><a href="{{url_for('tips')}}">Everyday Tips</a></li>
+              <li><a href="{{url_for('govtScheme')}}">Govt. Schemes</a></li>
+            </ul>
+          </li>
+          {% elif current_user.UType=='corporate' %}
+          <li class="sub-menu">
+            <a href="{{url_for('cDash')}}">
+              <i class="fa fa-dashboard"></i>
+              <span>Corporate's Dashboard</span>
+            </a>
+          </li>
+          {% elif current_user.UType=='admin' %}
+          <li class="sub-menu">
+            <a href="{{url_for('cDash')}}">
+              <i class="fa fa-dashboard"></i>
+              <span>Admin's Dashboard</span>
+            </a>
+          </li>
+          {% endif %}
+
+
+          {% else %}
+
+          <li class="sub-menu">
+            <a href="{{url_for('login')}}">
+              <i class="fa fa-sign-in"></i>
+              <span>Login</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('signup')}}">
+              <i class="fa fa-phone-square"></i>
+              <span>Signup</span>
+            </a>
+          </li>
+
+          {% endif %}
+        </ul>
+        <!-- sidebar menu end-->
+      </div>
+    </aside>
+    <!--sidebar end-->
+    <!-- **********************************************************************************************************************************************************
+        MAIN CONTENT
+        *********************************************************************************************************************************************************** -->
+    <!--main content start-->
+    <section id="main-content">
+      <section class="wrapper site-min-height">
+        <center>
+          <h2>Everyday Tips</h2>
+        </center>
+        <div class="col-md-4 col-sm-4 mb">
+          <div class="darkblue-panel pn">
+
+            <div>
+
+
+              <div class="center">
+                <br><br><br>
+                <button type="button" class="collapsible">Soil Preparation</button>
+                <div class="content">
+                  <br>
+                  <p>The soil is the backbone of agriculture. Hence, it is essential to know about soil before farming.
+                    Soils are of a variety of types, some are loamy and fertile while some are sandy and infertile.
+                    Every type of soil is not suitable for every crop. The crops grown in fertile soil will not
+                    necessarily give yield, because, for better quality, yield preparation of the soil is essential.</p>
+                  <p>Let’s see the properties and types of soil and methods to prepare the soil.</p><br><br>
+                  <h2>Soil Profile</h2><br>
+                  <p>Soil formation is the combined result of physical, chemical and biological processes under certain
+                    environmental conditions. The soil is a combination of biotic and abiotic components. It contains
+                    microorganisms, worms, minerals, decaying organic matters, hummus, elements like water and air which
+                    altogether makes the soil fertile and source of nutrients. The soil is mainly of three types: sandy
+                    soil, clayey soil, and loamy soil. Among this loamy soil is more suitable for farming. An ideal soil
+                    for agriculture has the following characteristics:<br>
+                  <ol>
+                    <li>=>Good water holding capacity</li>
+                    <li>=>Proper aeration</li>
+                    <li>=>Good consistency (texture)</li>
+                    <li>=>Balanced acid and alkaline content</li>
+                    <li>=>Rich in nutrients (micro and macronutrients)</li>
+                  </ol>
+                  </p><br><br>
+                  <h2>Soil for Agriculture</h2><br>
+                  <p> No soil is ideal hence it necessitates the preparation of the soil before and after the
+                    cultivation. Soil fertility may be lost due to continuous farming; for the replenishment of soil
+                    contents, it is prepared prior to sowing of seeds. In agriculture, ploughing, levelling, and
+                    manuring are the three steps of soil preparation.</p><br>
+                  <h4>Ploughing</h4><br>
+                  <p>Ploughing includes loosening and digging of soil. During ploughing, the soil becomes loose and the
+                    nutrients in deep soil come to the top. Also, aeration of soil will increase thus air is available
+                    for breathing and roots are easily penetrated between soil. Other purposes of ploughing are the
+                    integration of manure, uprooting of weeds, removal of infectious pathogens, insects etc. Ploughs of
+                    wood or iron are used for this purpose. Bullocks or tractors are used to pull this plough. Hoe is
+                    another tool used to uproot weeds and to loose soil.</p>
+                  <br>
+                  <h4>Levelling</h4><br>
+                  <p>Levelling helps in even distribution and soil is levelled after ploughing. A plank of wood or iron
+                    is used for this. Levelling also helps in water distribution without logging during irrigation.</p>
+                  <br>
+                </div>
+                <br>
+                <br>
+                <button type="button" class="collapsible">Selection and Sowing of Seeds</button>
+                <div class="content">
+                  <br>
+                  <p>Agriculture is the art and ability to cultivate plants and other livestock. There are different
+                    types of agriculture, and it plays a crucial role in the life of an economy. The main purpose of
+                    agriculture is not only to cultivate crops, but it also provides employment for the large proportion
+                    of the population, and it is the backbone of our economic system.</p><br>
+                  <p>As we all are aware of, there are multiple steps to be followed in the agricultural process.</p>
+                  <br>
+                  <p>The first and the initial stage is the selection of the seeds. Seeds are the fundamental
+                    requirement in most of the agricultural process. Before beginning with the cultivation, selecting
+                    the best quality seeds is a challenging task for the farmers. Because only the good quality of seeds
+                    give an expected result or yield. Therefore, farmers have to choose suitable seeds from the variety
+                    of options available in the market.</p><br>
+                  <p>Let us know more in detail about the selection and sowing of seeds.</p><br>
+                  <p>Selection and sowing of seeds are two agricultural practices which demand extreme attention and
+                    care.</p><br><br>
+                  <h2>Selection of Seeds</h2><br>
+                  <p>Healthy and good quality seeds are the roots of a healthy crop. The seeds that are used to
+                    cultivate new crops have to be selected very carefully and of high quality. The good quality seeds
+                    can either be bought from different sources or farmers can produce by their own. The selection of
+                    seeds is used to improve the quality of yields. There are several diseases that are transmitted via
+                    the seeds. If the selected seeds are from the infected fields then the seed-borne diseases will
+                    cause severe problems in the agricultural process. Thus, always obtain seeds from healthy plants.
+                    Along with the diseases free and healthy seeds, farmers also need to check the germination period of
+                    the seeds, nutrients required and other benefits in terms of yield and finance. Overall, selecting
+                    good quality seeds are essential for growing strong and healthy crops.</p><br><br>
+                  <h2>Sowing of Seeds</h2><br>
+                  <p>Sowing seeds is an essential part of crop production. After the preparation of soil, the previously
+                    selected seeds are scattered in the field. This process is called sowing. Sowing should be done
+                    carefully and evenly. If seeds are not sown uniformly, overcrowding of crops happens. For sufficient
+                    sunlight, water and other requirements congestion need to be prevented. There are two different
+                    methods of sowing the seeds. Traditionally, sowing is done manually by hands and in some places,
+                    seed drilling machines are used.</p><br>
+                  <h4>Traditional method or Sowing by hands</h4><br>
+                  <p>This is the most common and generally practised method by all the farmers. This is a very simple
+                    process, in which seeds are scattered by hands. This process is called broadcasting, which is the
+                    most economical method. Here, seeds are sown either by hand or by using tools. Sowing of seeds by
+                    hand is called broadcasting. This is common, but a uniform distribution is not maintained.</p><br>
+                  <h4>Sowing by seed drilling machines</h4><br>
+                  <p>This is a modern method used in some part of the world for sowing seeds. In this method, iron
+                    drills or the funnels filled with seeds are connected to a tractor. As the plough moves, seeds are
+                    distributed into the furrow made by the plough and are covered. This method is more advantageous
+                    than the traditional method. In this method, seeds are distributed evenly at regular distances and
+                    depth. This is profitable in terms of both labour and time.</p><br>
+                </div>
+                <br>
+                <br>
+                <button type="button" class="collapsible">Adding Manure and Fertilizers</button>
+                <div class="content">
+                  <p><br>When crops are grown one after the other, it decreases the productivity of the soil. However,
+                    this can be overcome by adding manures and fertilizers to the soil. This increases the yield of the
+                    plants and also restores the productivity of the soil. Therefore, manures and fertilizers are
+                    paramount for efficient crop production.</p><br><br>
+                  <h2>What is Manure?</h2><br>
+                  <p>Manure is obtained from the decomposition of dead plants and animals. They essentially function as
+                    sustenance to the crops. They help in the proper cultivation of crops. Addition of manure enables
+                    the soil to hold more water. Organic manures have acids that dissolve the nutrients with soil and
+                    make it available to the plants.</p><br><br>
+                  <h2>Advantages of Manure</h2><br>
+                  <p>
+                  <ol>
+                    <li>=>It increases the water-holding capacity of the soil.</li>
+                    <li>=>It makes the soil porous and facilitates the exchange of gases.</li>
+                    <li>=>The texture of the soil improves.</li>
+                    <li>=>The number of microbes increases in the soil.</li>
+                  </ol>
+                  </p><br>
+                  <p>The process of adding manures is known as manuring. Manuring should be done at regular intervals,
+                    otherwise, the plants become weak. However, the use of manure has many drawbacks too. They can be
+                    rather difficult to transport and are not nutrient specific.</p><br><br>
+                  <h2>Fertilizers</h2><br>
+                  <p>A fertilizer is a chemical substance that contains necessary nutrients such as nitrogen, potassium,
+                    and phosphorous to make the soil fertile. Popular examples of fertilizers are urea, potash, and
+                    ammonium sulphate.</p><br><br>
+                  <h2>Advantages of fertilizers</h2><br>
+                  <p>
+                  <ol>
+                    <li>=>They are quick in providing plant nutrients and restoring soil fertility.</li>
+                    <li>=>They are portable and easy to transport.</li>
+                    <li>=>Plants easily absorb fertilizers.</li>
+                    <li>=>Fertilizers improve and increase the productivity of many crops such as wheat, maize, and rice
+                    </li>
+                  </ol>
+                  </p><br>
+                  <p>However, these are chemicals, and they have the potential to decrease the fertility of soil if used
+                    constantly. Furthermore, it also pollutes water bodies.</p><br>
+
+                </div>
+                <br>
+                <br>
+                <button type="button" class="collapsible">Irrigation</button>
+                <div class="content">
+                  <p><br>Water is an essential element for survival. About seventy per cent of the human body consists
+                    of water while plants contain almost 90 per cent of water. Still, we have to depend on some outside
+                    sources to fulfil the water requirements of our body.</p><br>
+
+                  <p>Similarly, crops require water for their growth and development. The process of supplying water to
+                    the crops is known as irrigation.</p><br><br>
+                  <h2>What is Irrigation?</h2><br>
+                  <p>Irrigation is the process of applying water to the crops artificially to fulfil their water
+                    requirements. Nutrients may also be provided to the crops through irrigation. The various sources of
+                    water for irrigation are wells, ponds, lakes, canals, tube-wells and even dams. Irrigation offers
+                    moisture required for growth and development, germination and other related functions.</p><br>
+
+                  <p>The frequency, rate, amount and time of irrigation are different for different crops and also vary
+                    according to the types of soil and seasons. For example, summer crops require a higher amount of
+                    water as compared to winter crops.</p><br>
+
+                  <p>Let us have a look at different types of irrigation and the methods used for irrigation.</p>
+                  <br><br>
+                  <h2>Types of Irrigation</h2><br>
+                  <p>There are different types of irrigation practised for improving crop yield. These types of
+                    irrigation systems are practised based on the different types of soils, climates, crops and
+                    resources. The main types of irrigation followed by farmers include:</p><br>
+                  <h4>+ Surface Irrigation</h4><br>
+                  <p>In this system, no irrigation pump is involved. Here, water is distributed across the land by
+                    gravity.</p><br>
+                  <h4>+ Localized Irrigation</h4><br>
+                  <p>In this system, water is applied to each plant through a network of pipes under low pressure.</p>
+                  <br>
+                  <h4>+ Sprinkler Irrigation</h4><br>
+                  <p>Water is distributed from a central location by overhead high-pressure sprinklers or from
+                    sprinklers from the moving platform</p><br>
+                  <h4>+ Drip Irrigation</h4><br>
+                  <p>In this type, drops of water are delivered near the roots of the plants. This type of irrigation is
+                    rarely used as it requires more maintenance.</p><br>
+                  <h4>+ Centre Pivot Irrigation</h4><br>
+                  <p>In this, the water is distributed by a sprinkler system moving in a circular pattern.</p><br>
+                  <h4>+ Sub Irrigation</h4><br>
+                  <p>Water is distributed through a system of pumping stations gates, ditches and canals by raising the
+                    water table.</p><br>
+                  <h4>+ Manual Irrigation</h4><br>
+                  <p>This a labour intensive and time-consuming system of irrigation. Here, the water is distributed
+                    through watering cans by manual labour.</p><br><br>
+                  <h2>Methods of Irrigation</h2><br>
+                  <p>Irrigation can be carried out by two different methods:</p><br>
+                  <p>
+                  <ol>
+                    <li>=>Traditional Methods</li>
+                    <li>=>Modern Methods</li>
+                  </ol>
+                  </p><br><br>
+                  <h2>Traditional Methods of Irrigation</h2><br>
+                  <p>In this method, irrigation is done manually. Here, a farmer pulls out water from wells or canals by
+                    himself or using cattle and carries to farming fields. This method can vary in different regions.
+                  </p><br>
+                  <p>The main advantage of this method is that it is cheap. But its efficiency is poor because of the
+                    uneven distribution of water. Also, the chances of water loss are very high.</p><br>
+                  <p>Some examples of the traditional system are pulley system, lever system, chain pump. Among these,
+                    the pump system is the most common and used widely.</p><br><br>
+                  <h2>Modern Methods of Irrigation</h2><br>
+                  <p>The modern method compensates the disadvantages of traditional methods and thus helps in the proper
+                    way of water usage.
+                  <p><br>
+                  <p>The modern method involves two systems:</p><br>
+                  <p>
+                  <ol>
+                    <li>=>Sprinkler system</li>
+                    <li>=>Drip system</li>
+                  </ol>
+                  </p><br><br>
+                  <h4>Sprinkler System</h4><br>
+                  <p>A sprinkler system, as its name suggests, sprinkles water over the crop and helps in an even
+                    distribution of water. This method is much advisable in areas facing water scarcity.</p><br>
+                  <p>Here a pump is connected to pipes which generate pressure and water is sprinkled through nozzles of
+                    pipes.</p><br>
+                  <h4>Drip System</h4><br>
+                  <p>In the drip system, water supply is done drop by drop exactly at roots using a hose or pipe. This
+                    method can also be used in regions where water availability is less.</p><br> <br>
+                  <h2>Importance of Irrigation</h2><br>
+                  <p>The importance of irrigation can be explained in the following points:</p><br>
+                  <p>
+                  <ol>
+                    <li>=>Insufficient and uncertain rainfall adversely affects agriculture. Droughts and famines are
+                      caused due to low rainfall. Irrigation helps to increase productivity even in low rainfall.</li>
+                    <li>=>The productivity on irrigated land is higher as compared to the un-irrigated land.</li>
+                    <li>=>Multiple cropping is not possible in India because the rainy season is specific in most of the
+                      regions. However, the climate supports cultivation throughout the year. Irrigation facilities make
+                      it possible to grow more than one crop in most of the areas of the country.</li>
+                    <li>=>Irrigation has helped to bring most of the fallow land under cultivation.</li>
+                    <li>=>Irrigation has stabilized the output and yield levels.</li>
+                    <li>=>Irrigation increases the availability of water supply, which in turn increases the income of
+                      the farmers.</li>
+                  </ol>
+                  </p><br>
+                  <p>Irrigation should be optimum because even over-irrigation can spoil the crop production. Excess
+                    water leads to waterlogging, hinder germination, increased salt concentration and uprooting because
+                    roots can’t withstand standing water. Thus the proper method is to be used for the best cultivation.
+                  </p><br>
+                </div>
+                <br>
+                <br>
+                <button type="button" class="collapsible">Weeding and Crop Protection</button>
+                <div class="content">
+                  <br>
+                  <p>To succeed in getting the best and the maximum yield from his farm, a farmer has to minimise his
+                    crop loss and it demands proper and sustainable agricultural practices. By employing the right
+                    agricultural practices he can aim to improve the yield of the crops. For improving the yield, a
+                    farmer needs to improve the variety of crops, its production management, and its protection
+                    management.</p><br>
+
+                  <p>Here we will be discussing the crop protection management.</p><br><br>
+                  <h2>What is Crop Protection?</h2><br>
+                  <p>Crop protection is the general method or the practice of protecting the crop yields from different
+                    agents including pests, weeds, plant diseases, and other organisms that cause damage to the
+                    agricultural crops.</p><br>
+                  <p>
+                    Apart from crops, agricultural fields would have weeds, small animals like rats, mites, insects,
+                    pests, disease-causing pathogens and frequently raided by birds. All these factors are mainly
+                    responsible for the loss or damage to the crops. Thus to yield high crop production, farmers need to
+                    protect the crop from these pests. Hence crop protection management is important before, during and
+                    after the cultivation</p><br><br>
+                  <h2>Why do we need Crop Protection?</h2><br>
+                  <p>Globally, on average, every year farmers lose 20 to 30 (%) of their cultivated crops due to pests
+                    and other diseases. In order to reduce these losses, crop protection is much more required. There
+                    are different types of Crop Protection products available in the market and are eco-friendly or
+                    environment-friendly products which help in preserving the environment and also protect the crops.
+                    These products include – Fungicides, Herbicides, Insecticides and Seed care.</p><br><br>
+                  <h2>What are the methods of crop protection?</h2><br>
+                  <p>There are many crop protection tools and practices, which farmers can implement to increase the
+                    success of their crops.</p><br>
+                  <h3>Crop protection before the cultivation</h3><br>
+                  <h2>+ Weed Management</h2><br>
+                  <p>Integrated Weed Management (IWM) is a long-term management approach to manage weeds through certain
+                    techniques. These techniques are a combination of biological, physical, chemical, mechanical and
+                    cultural practices. Overall, these help to improve crop production, revenue, and environmental
+                    condition. Before managing the weeds, we should know the definition and impact of weeds on various
+                    components like environment, economic and other parts of society.</p><br>
+                  <h4>What is Weed?</h4><br>
+                  <p>Weeds are defined as the unwanted plants in crop fields which grow along with the main crop. They
+                    are strong and dominating competitors for crops. Their copious seed production, quick population
+                    establishment, and adaptation characteristics make them tough competitors and help in their
+                    survival. Common examples of weeds are grass, algae, Amaranthus, Chenopodium.</p><br>
+                  <p>Weeds compete for essential components required by crops. They compete for light, water, nutrients,
+                    and space. They reduce the yield and sometimes they are sources of diseases as well</p><br><br>
+                  <h4>Types of Weeds</h4><br>
+                  <p>There are different types of weeding:</p><br>
+                  <h4>>>Hand Pulling and Cultivation</h4><br>
+                  <p>This refers to the process of weed removal by hands. Certain tools such as a shovel can be used for
+                    the task.</p><br>
+                  <h4>>>Pre-emergent herbicides</h4><br>
+                  <p>Pre-emergent herbicides prevent the growth of weeds. It is applied to the surface of the ground
+                    after planting perennial or annual plants. The plant should be in an active growth stage for
+                    effective results.</p><br>
+                  <h4>>>Mulches</h4><br>
+                  <p>Mulches are spread on the garden to restrict the access of the sun to the weed seeds, thereby,
+                    preventing the growth of the weeds</p><br><br>
+                  <h4>Crop Protection through Weeding</h4><br>
+                  <p>Weeding is the removal of weeds from the field. It is an effective pre-harvesting method of crop
+                    protection and crop production management. Weeds act as competitors of the crop for various
+                    resources required for growth like nutrients, light, water, etc. so it has to be removed as it may
+                    cause interference and decrease the yield.</p><br>
+                  <p>Weeds can be controlled in many ways. Weed management includes land preparation, water management,
+                    hand weeding, hand hoeing, crop rotation, and herbicides.</p><br>
+                  <p>Land preparation helps in the removal of seeds and uprooting of weeds before sowing of seeds of the
+                    main crop. Hand weeding is done manually which is very tiresome and time-consuming.</p><br>
+                  <p>Nowadays, weedicides and herbicides are most commonly used and are effective ways of weeding.
+                    Chemicals like MCPA, 2,4-D are some commonly used weedicides. They can be applied at three stages
+                    like before and after crop planting and after weed emergence. But these chemicals can cause health
+                    hazards and environmental issues.</p><br>
+                  <p>Weeds are beneficial to nature but it spoils the crop. Thus, weeds need to be controlled to prevent
+                    their impact on living beings.</p><br><br>
+                  <h2>+ Pests and Insects Management</h2><br>
+                  <p>Both insects and pests are the major cause of crop damage and yield loss. They could ruin the whole
+                    crop and eat up the large portion of grains. In fact, they can reduce crop output by 30-50(%) every
+                    year if left unchecked. The best ways to protect crop damage are by incorporating integrated pest
+                    and insect management. Spraying insecticides, pesticides help to minimize the crop damage by
+                    controlling the insects and other pests.</p><br><br>
+                  <h2>+ Plant Disease Management</h2><br>
+                  <p>Pathogenic diseases are another type of crop-damaging factors. Microorganisms like bacteria, fungi,
+                    and viruses affect different parts of the crop through various means. Crops could be protected from
+                    these diseases by using pesticides and biocontrol agents.</p><br>
+
+                </div>
+                <br>
+                <br>
+                <button type="button" class="collapsible">Harvesting and Storage</button>
+                <div class="content">
+                  <br>
+                  <p>The ultimate stages of crop production are harvesting and storage.</p><br>
+
+                  <p>Harvesting requires art and practice because a large proportion of crops can be lost due to
+                    improper methods of harvesting. Another concern besides harvesting is storage. Storage of grains is
+                    to be given utmost priority as improper storage can result in the destruction of crops being by
+                    pests or unfavourable environmental conditions.</p><br>
+                  <p>Thus, it requires proper knowledge of harvesting, methods of storage, and protection of grains,
+                    which are discussed below.</p><br><br>
+                  <h2>Harvesting</h2><br>
+                  <p>Once the crop is matured or fully ripen, they are cut and gathered (Reaping) which are collectively
+                    called as harvesting. Harvesting depends on many factors like season, crop variety, maturity period,
+                    etc.</p><br>
+                  <p>Over-irrigation, irregular sunlight can prolong ripening of crop which thus delays the harvesting
+                    time. Early harvesting causes loss of unripened grains while delayed harvesting leads to shedding
+                    off of grains.</p><br>
+                  <p>Besides this, rodents and even birds eat the grains. Therefore regular examination of the crop is
+                    necessary as harvesting period approaches. The golden yellow colour is the indication of ripened
+                    crops for paddy, rice, and wheat.</p><br>
+                  <p>Manually harvesting is done by using sickles but it is a tedious job as well as time-consuming. In
+                    recent times, machines called harvesters are used for harvesting, especially in large-scale farming.
+                  </p><br>
+                  <p>Followed by harvesting, threshing of the crop has to be performed. Threshing is the process, in
+                    which, the collected grains are separated from the chaff by beating or by the threshing machine. In
+                    small-scale farming, chaff and grains are separated from each other by a process called winnowing.
+                  </p><br>
+                  <p>Harvesting is considered as a festival in most part of the country. It is a time of joy where the
+                    fruits of the hard work of farmers come into reality. Some of the harvesting festivals are Pongal,
+                    Bihu, etc.</p><br><br>
+                  <h2>Storage</h2><br>
+                  <p>In the case of small-scale cultivation, farmers use the harvested crop for themselves while
+                    large-scale production is mainly for marketing. Thus the cultivators have to store the grains. For
+                    this, proper storage space has to be arranged. Inadequate storage space and improper storage methods
+                    can lead to a huge grain loss.</p><br>
+                  <p>In addition to pest and rodents, microbes like bacteria, fungi, and environmental conditions such
+                    as moisture and temperature might attack the stored grains. Therefore, proper treatment is required
+                    before the grains are stored.</p><br>
+                  <p>Rodent infestations can be prevented by pesticides. A moist environment results in fungal growth on
+                    grains. This can be avoided by proper drying of grains in sunlight.</p><br>
+                  <p>Another method is fumigation where chemicals are used to prevent bacteria and other microorganisms.
+                    After proper treatments, grains have to be stored in gunny bags or granaries and deposited in
+                    godowns.</p><br>
+                  <p>Thus we see how harvesting and storage of grains form an important part of crop production.</p><br>
+                </div>
+              </div>
+
+              <script>
+
+                var coll = document.getElementsByClassName("collapsible");
+                var i;
+
+                for (i = 0; i < coll.length; i++) {
+                  coll[i].addEventListener("click", function () {
+                    this.classList.toggle("active");
+                    var content = this.nextElementSibling;
+                    if (content.style.display === "block") {
+                      content.style.display = "none";
+                    } else {
+                      content.style.display = "block";
+                    }
+                  });
+                }
+              </script>
+
+            </div>
+            <!--  /darkblue panel -->
+          </div>
+      </section>
+      <!-- /wrapper -->
+    </section>
+    <!-- /MAIN CONTENT -->
+    <!--main content end-->
+    <!--footer start-->
+    <footer class="site-footer">
+      <div class="text-center">
+        <p>
+          &copy; Copyrights <strong>Cropwayy</strong>. All Rights Reserved
+        </p>
+        <div class="credits">
+
+          Created by team Cropwayy
+        </div>
+        <a href="farmstore.html#" class="go-top">
+          <i class="fa fa-angle-up"></i>
+        </a>
+      </div>
+    </footer>
+    <!--footer end-->
+  </section>
+  <script src="{{ url_for('static', filename='lib/jquery/jquery.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery-ui-1.9.2.custom.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.ui.touch-punch.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.ui.touch-punch.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.dcjqaccordion.2.7.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.scrollTo.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.nicescroll.js') }}" type="text/javascript"></script>
+
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+    }
+    </script>
+    
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
+
+  <!--common script for all pages-->
+  <script src="{{ url_for('static', filename='lib/common-scripts.js') }}" type="text/javascript"></script>
+
+
+</body>
+
+</html>

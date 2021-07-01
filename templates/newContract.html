@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Dashboard">
+  <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+  <title>Cropwayy | Home</title>
+
+  <!-- Favicons -->
+  <link href="{{ url_for('static', filename='img/favicon.ico') }}" rel="icon">
+
+  <!-- Bootstrap core CSS -->
+
+
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap-datepicker/css/datepicker.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap-daterangepicker/daterangepicker.css') }}">
+  <!--external css-->
+  <link rel="stylesheet" href="{{ url_for('static', filename='lib/font-awesome/css/font-awesome.css') }}">
+  <!-- Custom styles for this template -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style-responsive.css') }}">
+
+
+  <style>
+    html {
+      box-sizing: border-box;
+    }
+
+    *,
+    *:before,
+    *:after {
+      box-sizing: inherit;
+    }
+
+    .column1 {
+      float: left;
+      width: 25%;
+      margin-bottom: 16px;
+      padding: 0 15px;
+    }
+
+    .card {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      margin: 8px;
+    }
+
+
+
+    .container {
+      padding: 0 16px;
+    }
+
+    .container::after,
+    .row::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+
+    .title {
+      color: grey;
+    }
+
+
+    .button:hover {
+      background-color: #555;
+    }
+
+    @media screen and (max-width: 650px) {
+      .column {
+        width: 100%;
+        display: block;
+      }
+    }
+  </style>
+
+
+
+
+
+
+
+  <style>
+    .adjust {
+      margin: 20px;
+
+    }
+
+
+    .content-pannel {
+      width: 100%;
+
+    }
+
+    .pn {
+
+      margin: 15px;
+      background-color: #d9534f;
+      color: white;
+      height: auto;
+    }
+
+    #profile-01 {
+      background-image: url(img/about.jpg);
+      width: auto;
+      margin: 15px;
+
+    }
+
+    img.src {
+      width: 100px;
+    }
+  </style>
+
+
+</head>
+
+<body>
+  <section id="container">
+    <!-- **********************************************************************************************************************************************************
+        TOP BAR CONTENT & NOTIFICATIONS
+        *********************************************************************************************************************************************************** -->
+    <!--header start-->
+    <header class="header black-bg">
+      <div class="sidebar-toggle-box">
+        <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+      </div>
+      <!--logo start-->
+      <a href="index.html" class="logo"><b>CROP<span>WAYY</span></b></a>
+      {% if current_user.is_authenticated %}
+
+      <div class="top-menu">
+        <ul class="nav pull-right top-menu">
+          <li><a class="logout" href="{{url_for('logout')}}">Logout</a></li>
+        </ul>
+      </div>
+      {% else %}
+      <div class="top-menu">
+        <ul class="nav pull-right top-menu">
+          <li><a class="logout" href="{{url_for('login')}}">Login</a></li>
+        </ul>
+      </div>
+      {% endif %}
+    </header>
+    <!--header end-->
+    <!-- **********************************************************************************************************************************************************
+        MAIN SIDEBAR MENU
+        *********************************************************************************************************************************************************** -->
+    <!--sidebar start-->
+    <aside>
+      <div id="sidebar" class="nav-collapse ">
+        <!-- sidebar menu start-->
+        <ul class="sidebar-menu" id="nav-accordion">
+          <p class="centered"> {% if current_user.is_authenticated %}
+            {% if current_user.UType=='farmer' %}
+            <img src="{{ url_for('static', filename='img/f_user.jpg') }}" class="img-circle" width="80">
+            {% elif current_user.UType=='corporate' %}
+            <img src="{{ url_for('static', filename='img/c_user.png') }}" class="img-circle" width="80">
+
+            {% elif current_user.UType=='admin' %}
+
+            <img src="{{ url_for('static', filename='img/a_user.jpg') }}" class="img-circle" width="80">
+            {% elif current_user.UType=='retailer' %}
+
+            <img src="{{ url_for('static', filename='img/a_user.jpg') }}" class="img-circle" width="80">
+
+            {% elif current_user.UType=='wholesaler' %}
+
+            <img src="{{ url_for('static', filename='img/a_user.jpg') }}" class="img-circle" width="80">
+            {% endif %}
+            {% else %}
+            <img src="{{ url_for('static', filename='img/favicon.png') }}" class="img-circle" width="80">
+            {% endif %}
+
+
+
+          </p>
+          <h5 class="centered">
+
+            {% if current_user.is_authenticated %}
+            {% if current_user.UType=='farmer' %}
+            <a href="{{url_for('fprofile')}}"> {{ current_user.FullName}} </a>
+            {% elif current_user.UType=='corporate' %}
+            <a href="{{url_for('cprofile')}}"> {{ current_user.FullName}} </a>
+            {% elif current_user.UType=='admin' %}
+            <a href="{{url_for('cprofile')}}"> {{ current_user.FullName}} </a>
+            {% elif current_user.UType=='retailer' %}
+              <a href ="{{url_for('rprofile')}}">  {{ current_user.FullName}} </a>
+              {% elif current_user.UType=='wholesaler' %}
+              <a href ="{{url_for('wprofile')}}">  {{ current_user.FullName}} </a>
+            {% endif %}
+            {% else %}
+            Cropwian
+            {% endif %}
+          </h5>
+          <li class="mt">
+            <a href="{{url_for('home')}}">
+              <i class="fa fa-home"></i>
+              <span>Home</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('aboutus')}}">
+              <i class="fa fa-globe"></i>
+              <span>About Us</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('gallery')}}">
+              <i class="fa fa-camera"></i>
+              <span>Gallery</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('contactus')}}">
+              <i class="fa fa-phone-square"></i>
+              <span>Contact Us</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('farmstore')}}">
+              <i class="fa fa-shopping-cart"></i>
+              <span>Farm Store</span>
+            </a>
+          </li>
+          {% if current_user.is_authenticated %}
+          {% if current_user.UType=='farmer' %}
+          <li class="sub-menu">
+            <a href="{{url_for('fDash')}}">
+              <i class="fa fa-dashboard"></i>
+              <span>Farmer's Dashboard</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="javascript:;">
+              <i class="fa fa-desktop"></i>
+              <span>Our Services</span>
+            </a>
+            <ul class="sub">
+              <li><a href="{{url_for('prediction')}}">Predict Disease</a></li>
+              <li><a href="{{url_for('cropRec')}}">Crop Recommendation</a></li>
+              <li><a href="{{url_for('fertilizer')}}">Fertilizers</a></li>
+              <li><a href="{{url_for('flower')}}">Flower Species</a></li>
+              <li><a href="{{url_for('tips')}}">Everyday Tips</a></li>
+              <li><a href="{{url_for('govtScheme')}}">Govt. Schemes</a></li>
+            </ul>
+          </li>
+          <li class="sub-menu">
+            <a class='active' href="{{url_for('sellCrops')}}">
+              <i class="fa fa-inr"></i>
+              <span>Sell Crops</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('fDash')}}">
+              <i class="fa fa-pencil-square-o"></i>
+              <span>Get Contracts</span>
+            </a>
+          </li>
+          {% elif current_user.UType=='corporate' %}
+          <li class="sub-menu">
+            <a href="{{url_for('cDash')}}">
+              <i class="fa fa-dashboard"></i>
+              <span>Corporate's Dashboard</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a class="active" href="{{url_for('postContracts')}}">
+              <i class="fa fa-file-text"></i>
+              <span>Post Contracts</span>
+            </a>
+          </li>
+          {% elif current_user.UType=='admin' %}
+          <li class="sub-menu">
+            <a href="{{url_for('cDash')}}">
+              <i class="fa fa-dashboard"></i>
+              <span>Admin's Dashboard</span>
+            </a>
+          </li>
+          {% endif %}
+
+
+          {% else %}
+
+          <li class="sub-menu">
+            <a href="{{url_for('login')}}">
+              <i class="fa fa-sign-in"></i>
+              <span>Login</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('signup')}}">
+              <i class="fa fa-phone-square"></i>
+              <span>Signup</span>
+            </a>
+          </li>
+
+          {% endif %}
+
+
+
+        </ul>
+        <!-- sidebar menu end-->
+      </div>
+    </aside>
+    <!--sidebar end-->
+    <!-- **********************************************************************************************************************************************************
+        MAIN CONTENT
+        *********************************************************************************************************************************************************** -->
+    <!--main content start-->
+    <section id="main-content">
+      <section class="wrapper">
+        <!-- page start-->
+        <div class="row mt">
+          <div class="col-sm-3">
+            <section class="panel">
+              <div class="panel-body">
+                <a href="{{url_for('newContract')}}" class="btn btn-compose">
+                  <i class="fa fa-pencil"></i> Add new contract
+                </a>
+                <ul class="nav nav-pills nav-stacked mail-nav">
+                  <li><a href="{{url_for('postContracts')}}"> <i class="fa fa-inbox"></i>Your Post</a></li>
+                  <li><a href="#"> <i class="fa fa-tasks"></i>Applications</a></li>
+                  <li><a href="#"> <i class="fa fa-thumbs-o-up"></i> View Deals</a></li>
+                </ul>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="panel-body">
+                <ul class="nav nav-pills nav-stacked labels-info ">
+                  <li>
+                    <h4>TIPS</h4>
+                  </li>
+                  <li>
+                    Fill in the information correctly.
+                  </li>
+                  <br>
+                  <li>
+                    Be sure about the quantity.
+                  </li>
+                  <br>
+                  <li>
+                    Use the description box wisely to add information such as quality of the crop.
+                  </li>
+                  <br>
+                  <li>
+                    Add justified price.
+                    <p><span class="label label-danger">Greater than or equal to MSP of the crop.</span></p>
+                  </li>
+                  <br>
+                  <li>
+                    Recheck the information before posting.
+                  </li>
+                </ul>
+              </div>
+            </section>
+          </div>
+          <div class="col-sm-9">
+            <section class="panel">
+              <header class="panel-heading wht-bg">
+                <h4 class="gen-case">
+                  New Contract
+
+                </h4>
+              </header>
+              <div class="panel-body">
+                <div>
+                  <div class="col-lg-8 col-lg-offset-2 detailed">
+                    <h4 class="mb">Please enter the details</h4>
+                    <form action='\post_corporate_submit' role="form" method="post" enctype="multipart/form-data"
+                      class="form-horizontal">
+
+                      <div class="form-group">
+                        <label class="col-lg-2 control-label">Organization</label>
+                        <div class="col-lg-6">
+                          <label class="col-lg-30 control-label"> {{ current_user.FullName}} </label>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-lg-2 control-label">Email ID</label>
+                        <div class="col-lg-6">
+                          <label class="col-lg-30 control-label"> {{ current_user.Email}} </label>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-lg-2 control-label">Address</label>
+                        <div class="col-lg-6">
+                          <label class="col-lg-30 control-label">{{address}}</label>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-lg-2 control-label">State</label>
+                        <div class="col-lg-6">
+                          <label class="col-lg-30 control-label">{{state}}</label>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-lg-2 control-label">Pincode</label>
+                        <div class="col-lg-6">
+                          <label class="col-lg-30 control-label">{{pincode}}</label>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-lg-2 control-label">Phone No.</label>
+                        <div class="col-lg-6">
+                          <label class="col-lg-30 control-label">{{phone}}</label>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-lg-2 control-label">Crop</label>
+                        <div class="col-lg-6">
+                          <select name="crop" id="crop" class="form-control">
+                            <option selected disabled>Choose Crop </option>
+                            {% for data in crop_list %}
+                            <option value={{data}}>{{data}}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-lg-2 control-label">Quantity</label>
+                        <div class="col-lg-6">
+                          <input type="text" placeholder="Quintal" id="qty" name='qty' class="form-control">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-lg-2 control-label">Price</label>
+                        <div class="col-lg-6">
+                          <input type="text" placeholder="(Per quintal) " id="price" name='price' class="form-control">
+                          {% with messages = get_flashed_messages() %}
+                          {% if messages %}
+                          <div class="notification is-danger">
+                            {{ messages[0] }}
+                          </div>
+                          {% endif %}
+                          {% endwith %}
+                        </div>
+                      </div><br>
+                      <div class="form-group">
+
+                        <label class="col-lg-2 control-label">Contract Date</label>
+                        <div class="col-lg-6">
+                          <div class="input-group input-large" data-date="05/06/2021" data-date-format="mm/dd/yyyy">
+                            <input type="text" class="form-control dpd1" name="start" id='start'>
+                            <span class="input-group-addon">To</span>
+                            <input type="text" class="form-control dpd2" name="end" id='start'>
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="col-lg-2 control-label">Description</label>
+                        <div class="col-lg-10">
+                          <textarea rows="5" cols="30" class="form-control" id="desc" name="desc"></textarea>
+                        </div>
+                      </div>
+                      <div class="compose-btn">
+                        <button class="btn btn-theme btn-sm"><i class="fa fa-check"></i> Post</button>
+                        <button class="btn btn-sm"><i class="fa fa-times"></i> Discard</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+
+      </section>
+      <!-- /wrapper -->
+    </section>
+
+    <!-- /MAIN CONTENT -->
+    <!--main content end-->
+    <!--footer start-->
+    <footer class="site-footer">
+      <div class="text-center">
+        <p>
+          &copy; Copyrights <strong>Cropwayy</strong>. All Rights Reserved
+        </p>
+
+
+        Created by team Cropwayy
+      </div>
+      <a href="about.html#" class="go-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+
+    </footer>
+    <!--footer end-->
+  </section>
+  <!-- js placed at the end of the document so the pages load faster -->
+  <script src="{{ url_for('static', filename='lib/jquery/jquery.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery-ui-1.9.2.custom.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.ui.touch-punch.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.ui.touch-punch.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.dcjqaccordion.2.7.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.scrollTo.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.nicescroll.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/bootstrap-daterangepicker/daterangepicker.js') }}"
+    type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"
+    type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/bootstrap-daterangepicker/date.js') }}"
+    type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/advanced-form-components.js') }}" type="text/javascript"></script>
+
+
+
+  <!--common script for all pages-->
+  <script src="{{ url_for('static', filename='lib/common-scripts.js') }}" type="text/javascript"></script>
+
+  <!--script for this page-->
+
+</body>
+
+</html>

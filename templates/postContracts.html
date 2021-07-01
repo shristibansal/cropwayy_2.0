@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Dashboard">
+  <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+  <title>Cropwayy | Home</title>
+
+  <!-- Favicons -->
+  <link href="{{ url_for('static', filename='img/favicon.ico') }}" rel="icon">
+  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Bootstrap core CSS -->
+
+
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}">
+
+  <!--external css-->
+  <link rel="stylesheet" href="{{ url_for('static', filename='lib/font-awesome/css/font-awesome.css') }}">
+  <!-- Custom styles for this template -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style-responsive.css') }}">
+
+
+  <style>
+    html {
+      box-sizing: border-box;
+    }
+
+    *,
+    *:before,
+    *:after {
+      box-sizing: inherit;
+    }
+
+    .column1 {
+      float: left;
+      width: 25%;
+      margin-bottom: 16px;
+      padding: 0 15px;
+    }
+
+    .card {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      margin: 8px;
+    }
+
+
+
+    .container {
+      padding: 0 16px;
+    }
+
+    .container::after,
+    .row::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+
+    .title {
+      color: grey;
+    }
+
+
+    .button:hover {
+      background-color: #555;
+    }
+    .custom-box
+    {
+      border: 8px solid #4ECDC4;
+      border-radius: 10px;
+      width: 70vh;
+      background: linear-gradient(to bottom, #ffffff 0%, #4ecdc4 600%);
+      
+    }
+
+    @media screen and (max-width: 650px) {
+      .column {
+        width: 100%;
+        display: block;
+      }
+    }
+  </style>
+
+
+
+
+
+
+
+  <style>
+    .adjust {
+      margin: 20px;
+
+    }
+
+
+    .content-pannel {
+      width: 100%;
+
+    }
+
+    .pn {
+
+      margin: 15px;
+      background-color: #d9534f;
+      color: white;
+      height: auto;
+    }
+
+    #profile-01 {
+      background-image: url(img/about.jpg);
+      width: auto;
+      margin: 15px;
+
+    }
+
+    img.src {
+      width: 100px;
+    }
+  </style>
+</head>
+
+<body>
+  <section id="container">
+    <!-- **********************************************************************************************************************************************************
+        TOP BAR CONTENT & NOTIFICATIONS
+        *********************************************************************************************************************************************************** -->
+    <!--header start-->
+    <header class="header black-bg">
+      <div class="sidebar-toggle-box">
+        <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+      </div>
+      <!--logo start-->
+      <a href="index.html" class="logo"><b>CROP<span>WAYY</span></b></a>
+      {% if current_user.is_authenticated %}
+
+      <div class="top-menu">
+        <ul class="nav pull-right top-menu">
+          <li><a class="logout" href="{{url_for('logout')}}">Logout</a></li>
+        </ul>
+      </div>
+      {% else %}
+      <div class="top-menu">
+        <ul class="nav pull-right top-menu">
+          <li><a class="logout" href="{{url_for('login')}}">Login</a></li>
+        </ul>
+      </div>
+      {% endif %}
+    </header>
+    <!--header end-->
+    <!-- **********************************************************************************************************************************************************
+        MAIN SIDEBAR MENU
+        *********************************************************************************************************************************************************** -->
+    <!--sidebar start-->
+    <aside>
+      <div id="sidebar" class="nav-collapse ">
+        <!-- sidebar menu start-->
+        <ul class="sidebar-menu" id="nav-accordion">
+          <p class="centered"> {% if current_user.is_authenticated %}
+            {% if current_user.UType=='farmer' %}
+            <img src="{{ url_for('static', filename='img/f_user.jpg') }}" class="img-circle" width="80">
+            {% elif current_user.UType=='corporate' %}
+            <img src="{{ url_for('static', filename='img/c_user.png') }}" class="img-circle" width="80">
+
+            {% elif current_user.UType=='admin' %}
+
+            <img src="{{ url_for('static', filename='img/a_user.jpg') }}" class="img-circle" width="80">
+            {% elif current_user.UType=='retailer' %}
+
+            <img src="{{ url_for('static', filename='img/a_user.jpg') }}" class="img-circle" width="80">
+
+            {% elif current_user.UType=='wholesaler' %}
+
+            <img src="{{ url_for('static', filename='img/a_user.jpg') }}" class="img-circle" width="80">
+            {% endif %}
+            {% else %}
+            <img src="{{ url_for('static', filename='img/favicon.png') }}" class="img-circle" width="80">
+            {% endif %}
+
+
+
+          </p>
+          <h5 class="centered">
+
+            {% if current_user.is_authenticated %}
+            {% if current_user.UType=='farmer' %}
+            <a href="{{url_for('fprofile')}}"> {{ current_user.FullName}} </a>
+            {% elif current_user.UType=='corporate' %}
+            <a href="{{url_for('cprofile')}}"> {{ current_user.FullName}} </a>
+            {% elif current_user.UType=='admin' %}
+            <a href="{{url_for('cprofile')}}"> {{ current_user.FullName}} </a>
+            {% elif current_user.UType=='retailer' %}
+              <a href ="{{url_for('rprofile')}}">  {{ current_user.FullName}} </a>
+              {% elif current_user.UType=='wholesaler' %}
+              <a href ="{{url_for('wprofile')}}">  {{ current_user.FullName}} </a>
+            {% endif %}
+            {% else %}
+            Cropwian
+            {% endif %}
+          </h5>
+          <li class="mt">
+            <a href="{{url_for('home')}}">
+              <i class="fa fa-home"></i>
+              <span>Home</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('aboutus')}}">
+              <i class="fa fa-globe"></i>
+              <span>About Us</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('gallery')}}">
+              <i class="fa fa-camera"></i>
+              <span>Gallery</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('contactus')}}">
+              <i class="fa fa-phone-square"></i>
+              <span>Contact Us</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('farmstore')}}">
+              <i class="fa fa-shopping-cart"></i>
+              <span>Farm Store</span>
+            </a>
+          </li>
+          {% if current_user.is_authenticated %}
+          {% if current_user.UType=='farmer' %}
+          <li class="sub-menu">
+            <a href="{{url_for('fDash')}}">
+              <i class="fa fa-dashboard"></i>
+              <span>Farmer's Dashboard</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="javascript:;">
+              <i class="fa fa-desktop"></i>
+              <span>Our Services</span>
+            </a>
+            <ul class="sub">
+              <li><a href="{{url_for('prediction')}}">Predict Disease</a></li>
+              <li><a href="{{url_for('cropRec')}}">Crop Recommendation</a></li>
+              <li><a href="{{url_for('fertilizer')}}">Fertilizers</a></li>
+              <li><a href="{{url_for('flower')}}">Flower Species</a></li>
+              <li><a href="{{url_for('tips')}}">Everyday Tips</a></li>
+              <li><a href="{{url_for('govtScheme')}}">Govt. Schemes</a></li>
+            </ul>
+          </li>
+          <li class="sub-menu">
+            <a class='active' href="{{url_for('sellCrops')}}">
+              <i class="fa fa-inr"></i>
+              <span>Sell Crops</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('fDash')}}">
+              <i class="fa fa-pencil-square-o"></i>
+              <span>Get Contracts</span>
+            </a>
+          </li>
+          {% elif current_user.UType=='corporate' %}
+          <li class="sub-menu">
+            <a href="{{url_for('cDash')}}">
+              <i class="fa fa-dashboard"></i>
+              <span>Corporate's Dashboard</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a class="active" href="{{url_for('postContracts')}}">
+              <i class="fa fa-file-text"></i>
+              <span>Post Contracts</span>
+            </a>
+          </li>
+          {% elif current_user.UType=='admin' %}
+          <li class="sub-menu">
+            <a href="{{url_for('cDash')}}">
+              <i class="fa fa-dashboard"></i>
+              <span>Admin's Dashboard</span>
+            </a>
+          </li>
+          {% elif current_user.UType=='wholesaler' %}
+          <li class="sub-menu">
+            <a href="{{url_for('wDash')}}">
+              <i class="fa fa-dashboard"></i>
+              <span>wholesaler's Dashboard</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+           <a  href="{{url_for('buyProduce')}}">
+             <i class="fa fa-leaf"></i>
+             <span>Buy Produce</span>
+           </a>
+         </li>
+         <li class="sub-menu">
+           <a  href="{{url_for('sellProduce')}}">
+             <i class="fa fa-money"></i>
+             <span>Sell Produce</span>
+           </a>
+         </li>
+          {% elif current_user.UType=='retailer' %}
+          <li class="sub-menu">
+            <a  href="{{url_for('rDash')}}">
+              <i class="fa fa-dashboard"></i>
+              <span>Retailer's Dashboard</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('getProduce')}}">
+              <i class="fa fa-leaf"></i>
+              <span>Get Produce</span>
+            </a>
+          </li>
+          {% endif %}
+
+
+          {% else %}
+
+          <li class="sub-menu">
+            <a href="{{url_for('login')}}">
+              <i class="fa fa-sign-in"></i>
+              <span>Login</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('signup')}}">
+              <i class="fa fa-phone-square"></i>
+              <span>Signup</span>
+            </a>
+          </li>
+
+          {% endif %}
+
+
+
+        </ul> <!-- sidebar menu end-->
+      </div>
+    </aside>
+    <!--sidebar end-->
+    <!-- **********************************************************************************************************************************************************
+        MAIN CONTENT
+        *********************************************************************************************************************************************************** -->
+    <!--main content start-->
+    <section id="main-content">
+      <section class="wrapper">
+        <!-- page start-->
+        <div class="row mt">
+          <div class="col-sm-3">
+            <section class="panel">
+              <div class="panel-body">
+                <a href="{{url_for('newContract')}}" class="btn btn-compose">
+                  <i class="fa fa-pencil"></i> Add new contract
+                </a>
+                <ul class="nav nav-pills nav-stacked mail-nav">
+                  <li class="active"><a href="{{url_for('postContracts')}}"> <i class="fa fa-inbox"></i>Your Posts</a></li>
+                  <li><a href="{{url_for('applications')}}"> <i class="fa fa-tasks"></i>Applications</a></li>
+                  <li><a href="{{url_for('cdeals')}}">  <i class="fa fa-thumbs-o-up"></i> View Deals</a></li>
+                </ul>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="panel-body">
+                <ul class="nav nav-pills nav-stacked labels-info ">
+                  <li>
+                    <h4>Your Posts</h4>
+                  </li>
+                  <li>
+                    Here you will find all your added posts.
+                  </li>
+                  <br>
+                  <li>
+                    What you see here is similar to what different wholesalers and retailers will see while searching
+                    for a farmer to buy crops from.
+                  </li>
+                  <br>
+                  <li>
+                    You can easily edit or delete your posts.
+                    <p><span class="label label-danger">Click edit/ delete button to edit/ delete the post.</span></p>
+                  </li>
+                  <br>
+                </ul>
+              </div>
+            </section>
+          </div>
+          <div class="col-sm-9">
+            <section class="panel">
+              <header class="panel-heading wht-bg">
+                <h4 class="gen-case">Your Posts </h4>
+                {% if not ispost %}
+
+                <div class="alert alert-success"><b>Oh snap!</b>&nbsp;You haven't posted yet o_O</div>
+
+                {% else %}
+              </header>
+            
+              <section id="main-content">
+                <section class="wrapper site-min-height">
+
+
+
+                  {% for data in posts %}
+
+                  <div class="row">
+                    <div class="col-lg-30">
+                      <div class="col-lg-8 col-md-8 col-sm-6 col-xs-9">
+                        <div class="custom-box">
+                          <div class="servicetitle">
+                            <h4>{{name.FullName}}</h4>
+                            <hr>
+                          </div>
+                          <div class="icn-main-container">
+                            <span class="icn-container">{{data.Crop}}</span>
+                          </div>
+                          <p>Description: {{data.Description}}</p>
+                          <ul class="pricing">
+                            <li>Email: {{details.Email}}</li>
+                            <li>Address: {{add}}</li>
+                            <li>Phone: {{details.Phone}}</li>
+                            <li>Quantity: {{data.Quantity}}</li>
+                            <li>Price: {{data.Price}}</li>
+                          </ul>
+
+                          <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#myModal">edit</a>
+                          <!-- Modal -->
+                          <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+                            aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal"
+                                    aria-hidden="true">&times;</button>
+                                  <h4 class="modal-title" id="myModalLabel">Edit Post</h4>
+                                </div>
+                                
+                                <form role="form" class="form-horizontal" action="\post_corporate_edit" method="post"
+                                   name = 'edit' id = 'edit' enctype="multipart/form-data">
+                                  <div class="modal-body">
+                                    <div class="col-lg-8 col-lg-offset-2 detailed">
+                                      <br>
+                                      <h4 class="mb">Please enter the details</h4>
+
+
+                                      
+                                      <div class="form-group">
+                                        <label class="col-lg-2 control-label">Quantity</label>
+                                        <div class="col-lg-6">
+                                          <input type="text" placeholder="Quintal " id="qty" name="qty" class="form-control">
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="col-lg-2 control-label">Price</label>
+                                        <div class="col-lg-6">
+                                          <input type="text" placeholder="Per quintal " id="price" name="price" class="form-control">
+                                          {% with messages = get_flashed_messages() %}
+                                          {% if messages %}
+                                          <div class="notification is-danger">
+                                            {{ messages[0] }}
+                                          </div>
+                                          {% endif %}
+                                          {% endwith %}
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="col-lg-2 control-label">Description</label>
+                                        <div class="col-lg-10">
+                                          <textarea rows="5" cols="30" class="form-control" id="desc" name="desc"></textarea>
+                                        </div>
+                                      </div>
+
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+
+
+                                    <button class="btn btn-primary" name = 'edit' id="submit" value="{{data.PostID}}" type="submit">Save changes</button>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+
+                          </div>
+
+                          <a class="btn btn-danger" href="#" data-toggle="modal" data-target="#myModal1">delete</a>
+                          <div class="modal fade" id="myModal1" tabindex="-1" role="dialog"
+                            aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal"
+                                    aria-hidden="true">&times;</button>
+                                  <h4 class="modal-title" id="myModalLabel">Alert</h4>
+                                </div>
+                                <div class="modal-body">
+                                  Are you sure you want to permanently delete this post?
+                                </div>
+
+                                <div class="modal-footer">
+                                  <form action="\post_corporate_delete\{{data.PostID}}" name = "delete" id = "delete" method="deletes" enctype="multipart/form-data">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                                    <button class="btn btn-primary" name="delete" id="submit" type="submit"
+                                      value="{{data.PostID}}">Yes</button>
+
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                        <!-- end custombox -->
+                      </div>
+                      <!-- end col-4 -->
+
+                      <!-- end col-4 -->
+
+                      <!-- end col-4 -->
+                    </div>
+                    <!--  /col-lg-12 -->
+                  </div>
+
+
+                  {% endfor %}
+
+                  {% endif %}
+
+
+
+                  <!----------------------------------------------------------- /POST END---------------------------------------------------------------- -->
+                </section>
+                <!-- /wrapper -->
+              </section>
+            </section>
+          </div>
+
+        </div>
+      </section>
+      <!-- /wrapper -->
+    </section>
+    <!--footer start-->
+    <footer class="site-footer">
+      <div class="text-center">
+        <p>
+          &copy; Copyrights <strong>Cropwayy</strong>. All Rights Reserved
+        </p>
+
+
+        Created by team Cropwayy
+      </div>
+      <a href="about.html#" class="go-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+
+    </footer>
+    <!--footer end-->
+  </section>
+  <!-- js placed at the end of the document so the pages load faster -->
+  <script src="{{ url_for('static', filename='lib/jquery/jquery.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery-ui-1.9.2.custom.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.ui.touch-punch.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.ui.touch-punch.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.dcjqaccordion.2.7.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.scrollTo.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.nicescroll.js') }}" type="text/javascript"></script>
+
+
+
+  <!--common script for all pages-->
+  <script src="{{ url_for('static', filename='lib/common-scripts.js') }}" type="text/javascript"></script>
+
+  <!--script for this page-->
+
+</body>
+
+</html>

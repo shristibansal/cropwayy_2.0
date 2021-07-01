@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Dashboard">
+  <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+  <title>CROPWAYY | GALLERY</title>
+
+  <!-- Favicons -->
+    
+  <link href="{{ url_for('static', filename='img/favicon.png') }}" rel="icon">
+  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Bootstrap core CSS -->
+  <link href=" {{ url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <!--external css-->
+  <link href=" {{ url_for('static', filename='lib/font-awesome/css/font-awesome.css') }}"  rel="stylesheet" />
+  <link href="{{ url_for('static',filename='lib/fancybox/jquery.fancybox.css') }}"  rel="stylesheet" />
+  <!-- Custom styles for this template -->
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/style-responsive.css') }}"rel="stylesheet">
+  <script src="{{ url_for('static', filename='lib/jquery/jquery.min.js') }}" ></script>
+    <style>
+        .img-responsive{
+            height:300px;
+        }</style>
+
+
+</head>
+
+<body>
+  <section id="container">
+    <!-- **********************************************************************************************************************************************************
+        TOP BAR CONTENT & NOTIFICATIONS
+        *********************************************************************************************************************************************************** -->
+    <!--header start-->
+    <header class="header black-bg">
+      <div class="sidebar-toggle-box">
+        <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+      </div>
+      <!--logo start-->
+      <a href="{{url_for('home')}}" class="logo"><b>CROP<span>WAYY</span></b></a>
+     {% if current_user.is_authenticated %}
+      
+       <div class="top-menu">
+        <ul class="nav pull-right top-menu">
+          <li><a class="logout" href="{{url_for('logout')}}">Logout</a></li>
+        </ul>
+      </div>
+        {% else %}
+         <div class="top-menu">
+        <ul class="nav pull-right top-menu">
+          <li><a class="logout" href="{{url_for('login')}}">Login</a></li>
+        </ul>
+      </div>
+        {% endif %}
+    </header>
+    <!--header end-->
+    <!-- **********************************************************************************************************************************************************
+        MAIN SIDEBAR MENU
+        *********************************************************************************************************************************************************** -->
+    <!--sidebar start-->
+    <aside>
+      <div id="sidebar" class="nav-collapse ">
+        <!-- sidebar menu start-->
+        <ul class="sidebar-menu" id="nav-accordion">
+          <p class="centered"> {% if current_user.is_authenticated %}
+              {% if current_user.UType=='farmer' %}
+             <img src="{{ url_for('static', filename='img/f_user.jpg') }}" class="img-circle" width="80">
+              {% elif current_user.UType=='corporate' %}
+              <img src="{{ url_for('static', filename='img/c_user.png') }}" class="img-circle" width="80">
+             
+              {% elif current_user.UType=='admin' %}
+             
+              <img src="{{ url_for('static', filename='img/a_user.jpg') }}" class="img-circle" width="80">
+              {% endif %}
+                {% else %}
+           <img src="{{ url_for('static', filename='img/favicon.png') }}" class="img-circle" width="80">
+            {% endif %}
+            
+            
+            
+            </p>
+          <h5 class="centered">
+              
+              {% if current_user.is_authenticated %}
+              {% if current_user.UType=='farmer' %}
+              <a href ="{{url_for('fprofile')}}">  {{ current_user.FullName}} </a>
+              {% elif current_user.UType=='corporate' %}
+              <a href ="{{url_for('cprofile')}}">  {{ current_user.FullName}} </a>
+              {% elif current_user.UType=='admin' %}
+              <a href ="{{url_for('cprofile')}}">  {{ current_user.FullName}} </a>
+              {% elif current_user.UType=='retailer' %}
+              <a href ="{{url_for('rprofile')}}">  {{ current_user.FullName}} </a>
+              {% elif current_user.UType=='wholesaler' %}
+              <a href ="{{url_for('wprofile')}}">  {{ current_user.FullName}} </a>
+              {% endif %}
+                {% else %}
+           Cropwian
+            {% endif %}
+            </h5>
+          <li class="mt">
+            <a href="{{url_for('home')}}">
+              <i class="fa fa-home"></i>
+              <span>Home</span>
+              </a>
+          </li>
+            <li class="sub-menu">
+            <a href="{{url_for('aboutus')}}">
+              <i class="fa fa-globe"></i>
+              <span>About Us</span>
+              </a>
+             </li>
+             <li class="sub-menu">
+            <a class="active" href="javascript:;">
+              <i class="fa fa-camera"></i>
+              <span>Gallery</span>
+              </a>
+             </li>
+             <li class="sub-menu">
+            <a href="{{url_for('contactus')}}">
+              <i class="fa fa-phone-square"></i>
+              <span>Contact Us</span>
+              </a>
+             </li>
+             <li class="sub-menu">
+            <a href="{{url_for('farmstore')}}">
+              <i class="fa fa-shopping-cart"></i>
+              <span>Farm Store</span>
+              </a>
+             </li>
+            {% if current_user.is_authenticated %}
+           {% if current_user.UType=='farmer' %}
+            <li class="sub-menu">
+            <a href="{{url_for('fDash')}}">
+              <i class="fa fa-dashboard"></i>
+              <span>Farmer's Dashboard</span>
+              </a>
+             </li>
+             <li class="sub-menu">
+            <a href="javascript:;">
+              <i class="fa fa-desktop"></i>
+              <span>Our Services</span>
+              </a>
+              <ul class="sub">
+                <li><a href="{{url_for('prediction')}}">Predict Disease</a></li>
+                <li><a href="{{url_for('cropRec')}}">Crop Recommendation</a></li>
+                <li><a href="{{url_for('fertilizer')}}">Fertilizers</a></li>
+                <li><a href="{{url_for('flower')}}">Flower Species</a></li>
+                <li><a href="{{url_for('tips')}}">Everyday Tips</a></li>
+                <li><a href="{{url_for('govtScheme')}}">Govt. Schemes</a></li>
+              </ul>
+          </li>
+             {% elif current_user.UType=='corporate' %}
+            <li class="sub-menu">
+            <a href="{{url_for('cDash')}}">
+              <i class="fa fa-dashboard"></i>
+              <span>Corporate's Dashboard</span>
+              </a>
+             </li>
+              {% elif current_user.UType=='admin' %}
+            <li class="sub-menu">
+            <a href="{{url_for('cDash')}}">
+              <i class="fa fa-dashboard"></i>
+              <span>Admin's Dashboard</span>
+              </a>
+             </li>
+            {% endif %}
+            
+            
+              {% else %}
+            
+             <li class="sub-menu">
+            <a href="{{url_for('login')}}">
+              <i class="fa fa-sign-in"></i>
+              <span>Login</span>
+              </a>
+             </li>
+             <li class="sub-menu">
+            <a href="{{url_for('signup')}}">
+              <i class="fa fa-phone-square"></i>
+              <span>Signup</span>
+              </a>
+             </li>
+            
+            {% endif %}
+          
+        
+     
+        </ul>
+     
+      </div>
+    </aside>
+    <!--sidebar end-->
+    <!-- **********************************************************************************************************************************************************
+        MAIN CONTENT
+        *********************************************************************************************************************************************************** -->
+    <!--main content start-->
+    <section id="main-content">
+      <section class="wrapper site-min-height">
+        <h3><i class="fa fa-angle-right"></i> Gallery</h3>
+        <hr>
+        <div class="row mt">
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc">
+            <div class="project-wrapper">
+              <div class="project">
+                <div class="photo-wrapper">
+                  <div class="photo">
+                    <a class="fancybox" href="{{ url_for('static', filename='img/gallery/APPLE1.jpg')}}"><img class="img-responsive" src="{{ url_for('static', filename='img/gallery/APPLE1.jpg')}}" alt=""></a>
+                  </div>
+                  <div class="overlay"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- col-lg-4 -->
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc">
+            <div class="project-wrapper">
+              <div class="project">
+                <div class="photo-wrapper">
+                  <div class="photo">
+                    <a class="fancybox" href="{{ url_for('static', filename='img/gallery/BLUEBERRY1.jpg')}}"><img class="img-responsive" src="{{ url_for('static', filename='img/gallery/BLUEBERRY1.jpg')}}" alt=""></a>
+                  </div>
+                  <div class="overlay"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- col-lg-4 -->
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc">
+            <div class="project-wrapper">
+              <div class="project">
+                <div class="photo-wrapper">
+                  <div class="photo">
+                    <a class="fancybox" href="{{ url_for('static', filename='img/gallery/CASAVA1.jpg')}}"><img class="img-responsive" src="{{ url_for('static', filename='img/gallery/CASAVA1.jpg')}}" alt=""></a>
+                  </div>
+                  <div class="overlay"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- col-lg-4 -->
+        </div>
+         
+          <div class="row mt">
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc">
+            <div class="project-wrapper">
+              <div class="project">
+                <div class="photo-wrapper">
+                  <div class="photo">
+                    <a class="fancybox" href="{{ url_for('static', filename='img/gallery/POTATO1.jpg')}}"><img class="img-responsive" src="{{ url_for('static', filename='img/gallery/POTATO1.jpg')}}" alt=""></a>
+                  </div>
+                  <div class="overlay"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- col-lg-4 -->
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc">
+            <div class="project-wrapper">
+              <div class="project">
+                <div class="photo-wrapper">
+                  <div class="photo">
+                    <a class="fancybox" href="{{ url_for('static', filename='img/gallery/SOYABEAN1.jpg')}}"><img class="img-responsive" src="{{ url_for('static', filename='img/gallery/SOYABEAN1.jpg')}}" alt=""></a>
+                  </div>
+                  <div class="overlay"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- col-lg-4 -->
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc">
+            <div class="project-wrapper">
+              <div class="project">
+                <div class="photo-wrapper">
+                  <div class="photo">
+                    <a class="fancybox" href="{{ url_for('static', filename='img/gallery/SQUASH1.jpg')}}"><img class="img-responsive" src="{{ url_for('static', filename='img/gallery/SQUASH1.jpg')}}" alt=""></a>
+                  </div>
+                  <div class="overlay"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- col-lg-4 -->
+        </div>
+          
+        <!-- /row -->
+        <div class="row mt">
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc">
+            <div class="project-wrapper">
+              <div class="project">
+                <div class="photo-wrapper">
+                  <div class="photo">
+                    <a class="fancybox" href="{{ url_for('static', filename='img/gallery/CHERRY1.jpg')}}"><img class="img-responsive" src="{{ url_for('static', filename='img/gallery/CHERRY1.jpg')}}" alt=""></a>
+                  </div>
+                  <div class="overlay"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- col-lg-4 -->
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc">
+            <div class="project-wrapper">
+              <div class="project">
+                <div class="photo-wrapper">
+                  <div class="photo">
+                    <a class="fancybox" href="{{ url_for('static', filename='img/gallery/CORN1.jpg')}}"><img class="img-responsive" src="{{ url_for('static', filename='img/gallery/CORN1.jpg')}}" alt=""></a>
+                  </div>
+                  <div class="overlay"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- col-lg-4 -->
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc">
+            <div class="project-wrapper">
+              <div class="project">
+                <div class="photo-wrapper">
+                  <div class="photo">
+                    <a class="fancybox" href="{{ url_for('static', filename='img/gallery/COTTON1.jpg')}}"><img class="img-responsive" src="{{ url_for('static', filename='img/gallery/COTTON1.jpg')}}" alt=""></a>
+                  </div>
+                  <div class="overlay"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- col-lg-4 -->
+        </div>
+        <!-- /row -->
+           <div class="row mt mb">
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc">
+            <div class="project-wrapper">
+              <div class="project">
+                <div class="photo-wrapper">
+                  <div class="photo">
+                    <a class="fancybox" href="{{ url_for('static', filename='img/gallery/GRAPES1.jpg')}}"><img class="img-responsive" src="{{ url_for('static', filename='img/gallery/GRAPES1.jpg')}}" alt=""></a>
+                  </div>
+                  <div class="overlay"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- col-lg-4 -->
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc">
+            <div class="project-wrapper">
+              <div class="project">
+                <div class="photo-wrapper">
+                  <div class="photo">
+                    <a class="fancybox" href=" {{ url_for('static', filename='img/gallery/PEACH1.jpg') }}"><img class="img-responsive" src=" {{ url_for('static', filename='img/gallery/PEACH1.jpg') }}" alt=""></a>
+                  </div>
+                  <div class="overlay"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- col-lg-4 -->
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc">
+            <div class="project-wrapper">
+              <div class="project">
+                <div class="photo-wrapper">
+                  <div class="photo">
+                    <a class="fancybox" href=" {{ url_for('static', filename='img/gallery/PEPPER1.jpg') }}"><img class="img-responsive" src=" {{ url_for('static', filename='img/gallery/PEPPER1.jpg') }}" alt=""></a>
+                  </div>
+                  <div class="overlay"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+            
+          <!-- col-lg-4 -->
+        </div>
+        <div class="row mt mb">
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc">
+            <div class="project-wrapper">
+              <div class="project">
+                <div class="photo-wrapper">
+                  <div class="photo">
+                    <a class="fancybox" href="{{ url_for('static', filename='img/gallery/TOMATO1.jpg') }}"><img class="img-responsive" src="{{ url_for('static', filename='img/gallery/TOMATO1.jpg') }}" alt=""></a>
+                  </div>
+                  <div class="overlay"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- col-lg-4 -->
+         
+          <!-- col-lg-4 -->
+      
+            
+          <!-- col-lg-4 -->
+        </div>
+        <!-- /row -->
+      </section>
+      <!-- /wrapper -->
+    </section>
+    <!-- /MAIN CONTENT -->
+    <!--main content end-->
+    <!--footer start-->
+    <footer class="site-footer">
+      <div class="text-center">
+        <p>
+          &copy; Copyrights <strong>Dashio</strong>. All Rights Reserved
+        </p>
+        <div class="credits">
+          <!--
+            You are NOT allowed to delete the credit link to TemplateMag with free version.
+            You can delete the credit link only if you bought the pro version.
+            Buy the pro version with working PHP/AJAX contact form: https://templatemag.com/dashio-bootstrap-admin-template/
+            Licensing information: https://templatemag.com/license/
+          -->
+          Created with Dashio template by <a href="https://templatemag.com/">TemplateMag</a>
+        </div>
+        <a href="gallery.html#" class="go-top">
+          <i class="fa fa-angle-up"></i>
+          </a>
+      </div>
+    </footer>
+    <!--footer end-->
+  </section>
+  <!-- js placed at the end of the document so the pages load faster -->
+   
+  <script src="{{ url_for('static', filename='lib/fancybox/jquery.fancybox.js') }}"></script>
+  <script src="{{ url_for('static', filename='lib/bootstrap/js/bootstrap.min.js') }}"></script>
+  <script class="include" type="text/javascript" src="{{ url_for('static', filename='lib/jquery.dcjqaccordion.2.7.js') }}"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.scrollTo.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.nicescroll.js') }}" type="text/javascript"></script>
+  <!--common script for all pages-->
+  <script src="{{ url_for('static', filename='lib/common-scripts.js') }}"></script>
+  <!--script for this page-->
+  <script type="text/javascript">
+    $(function() {
+      //    fancybox
+      jQuery(".fancybox").fancybox();
+    });
+  </script>
+
+</body>
+
+</html>
