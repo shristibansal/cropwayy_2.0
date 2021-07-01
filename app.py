@@ -1771,8 +1771,10 @@ def login_submit():
     #remember = True if request.form.get('remember') else False
 
  
-    
-    user = Sign_up.query.filter_by(Email=email).first()
+    try:
+        user = Sign_up.query.filter_by(Email=email).first()
+    except Exception :
+        session.rollback()
     
     if not user:
         return "<h1> User does not exist, Please create an account and try again </h1>"
