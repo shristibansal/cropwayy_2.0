@@ -18,11 +18,11 @@ from flask_login import UserMixin
 
 app = Flask(__name__)
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/cropwayydb'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/cropwayydb'
 
 
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://cropwayy@cropwayydb:Messi#18@cropwayydb.mysql.database.azure.com/cropwayy"
+#app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://cropwayy@cropwayydb:Messi#18@cropwayydb.mysql.database.azure.com/cropwayy"
 
 
 
@@ -34,6 +34,8 @@ app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 app.config['SECRET_KEY'] = 'kush123'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
+db.session.rollback()
 
 login_manager = LoginManager()       
 login_manager.login_view = 'login'

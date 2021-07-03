@@ -72,11 +72,11 @@
 
             <img src="{{ url_for('static', filename='img/a_user.jpg') }}" class="img-circle" width="80">
             {% elif current_user.UType=='retailer' %}
-             
+
             <img src="{{ url_for('static', filename='img/a_user.jpg') }}" class="img-circle" width="80">
 
             {% elif current_user.UType=='wholesaler' %}
-           
+
             <img src="{{ url_for('static', filename='img/a_user.jpg') }}" class="img-circle" width="80">
             {% endif %}
             {% else %}
@@ -96,9 +96,9 @@
             {% elif current_user.UType=='admin' %}
             <a href="{{url_for('cprofile')}}"> {{ current_user.FullName}} </a>
             {% elif current_user.UType=='retailer' %}
-            <a href ="{{url_for('rprofile')}}">  {{ current_user.FullName}} </a>
+            <a href="{{url_for('rprofile')}}"> {{ current_user.FullName}} </a>
             {% elif current_user.UType=='wholesaler' %}
-            <a href ="{{url_for('wprofile')}}">  {{ current_user.FullName}} </a>
+            <a href="{{url_for('wprofile')}}"> {{ current_user.FullName}} </a>
             {% endif %}
             {% else %}
             Cropwian
@@ -184,20 +184,20 @@
             </a>
           </li>
           <li class="sub-menu">
-           <a  href="{{url_for('buyProduce')}}">
-             <i class="fa fa-leaf"></i>
-             <span>Buy Produce</span>
-           </a>
-         </li>
-         <li class="sub-menu">
-           <a  href="{{url_for('sellProduce')}}">
-             <i class="fa fa-money"></i>
-             <span>Sell Produce</span>
-           </a>
-         </li>
+            <a href="{{url_for('buyProduce')}}">
+              <i class="fa fa-leaf"></i>
+              <span>Buy Produce</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('sellProduce')}}">
+              <i class="fa fa-money"></i>
+              <span>Sell Produce</span>
+            </a>
+          </li>
           {% elif current_user.UType=='retailer' %}
           <li class="sub-menu">
-            <a  href="{{url_for('rDash')}}">
+            <a href="{{url_for('rDash')}}">
               <i class="fa fa-dashboard"></i>
               <span>Retailer's Dashboard</span>
             </a>
@@ -252,15 +252,7 @@
                   </h4>
 
                 </div>
-                <script>
-                  if (HelpCenter.user.role == "anonymous") {
-                    $("div.anonymous").show();
-                  }
 
-                  if (HelpCenter.user.role == "end_user") {
-                    $("div.end_user").show();
-                  }
-                </script>
               </div>
               <!-- /col-md-4 -->
               <div class="col-md-4 profile-text">
@@ -278,10 +270,10 @@
 
                   <div class="fileupload fileupload-new" data-provides="fileupload">
                     <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-                      <img src="data:;base64,{{Image }}" />
+                      <img src="data:;base64,{{Image}}" />
                     </div>
                   </div>
-<br>
+                  <br>
                   </p>
                 </div>
               </div>
@@ -314,16 +306,15 @@
 
                     <div class="row">
                       {% if not isinfo %}
-                      <div class="col-lg-8 col-lg-offset-2 detailed">
-                       
 
-                        <div class="alert alert-danger"><b>Oh snap!</b>&nbsp;Looks like you haven't completed your profile
-                          yet
-                          :(
-                          <div>Complete your profile<a href="{{url_for('rprofile')}}">
-                              <button type="button" class="btn btn-sm btn-primary">Now</button></a></div>
-                        </div>
-                        {% else %}
+                      <div class="alert alert-danger"><b>Oh snap!</b>&nbsp;Looks like you haven't completed your profile
+                        yet
+                        :(
+                        <div>Complete your profile<a href="{{url_for('rprofile')}}">
+                            <button type="button" class="btn btn-sm btn-primary">Now</button></a></div>
+                      </div>
+                      {% else %}
+                      <div class="col-lg-8 col-lg-offset-2 detailed">
                         <h4 class="mb">Personal Information</h4>
                         <form role="form" class="form-horizontal">
 
@@ -407,39 +398,27 @@
                         </form>
                       </div>
                       {% endif %}
+                      <!-- /col-lg-8 -->
                     </div>
-                    <!-- /col-lg-8 -->
-                  
-                  <!-- /row -->
+                    <!-- /row -->
 
 
-                  <!-- /OVERVIEW -->
-                </div>
-                <!-- /tab-pane -->
+                    <!-- /OVERVIEW -->
+                  </div>
+                  <!-- /tab-pane -->
+
+                  <!-------------------------------------------------EDIT INFO-------------------------------------------------------------->
+
+                  <!-- /tab-pane -->
+                  <div id="edit" class="tab-pane">
+                    <div class="row">
+
+                      <div class="col-lg-8 col-lg-offset-2 detailed">
 
 
+                        <h4 class="mb">Corporate's Information</h4>
 
-
-
-
-
-
-
-
-
-                <!---------------------CORPORATE INFO EDIT START------------------------>
-
-
-                <!-- /tab-pane -->
-                <div id="edit" class="tab-pane">
-                  <div class="row">
-
-                    <div class="col-lg-8 col-lg-offset-2 detailed">
-
-
-                      <h4 class="mb">Corporate Information</h4>
-
-                      <form role="form" class="form-horizontal" action="\edit_corp_submit" method="post"
+                        <form role="form" class="form-horizontal" action="\edit_corp_submit" method="post"
                         enctype="multipart/form-data">
 
                         <div class="form-group">
@@ -561,62 +540,66 @@
                         </div>
                         <div class="form-group">
                           <div class="col-lg-offset-2 col-lg-10">
-                            <button class="btn btn-theme" id = "submit" type="submit">Save</button>
+                            <button class="btn btn-theme" id="submit" type="submit">Save</button>
                             <button class="btn btn-theme04" type="button">Cancel</button>
                           </div>
                         </div>
                       </form>
+                      </div>
+                      <!-- /col-lg-8 -->
                     </div>
-                    <!-- /col-lg-8 -->
+                    <!-- /row -->
                   </div>
-                  <!-- /row -->
-                </div>
-                <!-- /tab-pane -->
+                  <!-- /tab-pane -->
 
 
-                <div id="change_password" class="tab-pane">
-                  <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2 detailed">
-                      <h4 class="mb">Enter the following information to change your password.</h4>
-                      <form role="form" class="form-horizontal" action="\edit_farmer_pass_submit" method="post">
-                        <div class="form-group">
-                          <label class="col-lg-2 control-label">Old Password</label>
-                          <div class="col-lg-30">
-                            <input type="password" placeholder=" " id="old" name="old" class="form-control"
-                              required="required">
+                  <div id="change_password" class="tab-pane">
+                    <div class="row">
+                      <div class="col-lg-8 col-lg-offset-2 detailed">
+                        <h4 class="mb">Enter the following information to change your password.</h4>
+                        <form role="form" class="form-horizontal" action="\edit_farmer_pass_submit" method="post">
+
+
+
+                          <div class="form-group">
+                            <label class="col-lg-2 control-label">Old Password</label>
+                            <div class="col-lg-30">
+                              <input type="password" placeholder=" " id="old" name="old" class="form-control"
+                                required="required">
+                            </div>
                           </div>
-                        </div>
-                        <div class="form-group">
-                          <label class="col-lg-2 control-label">New Password</label>
-                          <div class="col-lg-30">
-                            <input type="password" placeholder=" " id="new" name="old" class="form-control"
-                              required="required">
+                          <div class="form-group">
+                            <label class="col-lg-2 control-label">New Password</label>
+                            <div class="col-lg-30">
+                              <input type="password" placeholder=" " id="new" name="old" class="form-control"
+                                required="required">
+                            </div>
                           </div>
-                        </div>
-                        <div class="form-group">
-                          <div class="col-lg-offset-2 col-lg-10">
-                            <button class="btn btn-theme" type="submit">Change</button>
-                            <button class="btn btn-theme04" type="button">Cancel</button>
+                          <div class="form-group">
+                            <div class="col-lg-offset-2 col-lg-10">
+                              <button class="btn btn-theme" type="submit">Change</button>
+                              <button class="btn btn-theme04" type="button">Cancel</button>
+                            </div>
                           </div>
-                        </div>
-                      </form>
+                        </form>
+                      </div>
+
+
+                      <!-- /col-lg-8 -->
                     </div>
-                    <!-- /col-lg-8 -->
+                    <!-- /row -->
                   </div>
-                  <!-- /row -->
                 </div>
+                <!-- /tab-content -->
               </div>
-              <!-- /tab-content -->
+              <!-- /panel-body -->
             </div>
-            <!-- /panel-body -->
-          </div>
-          <!-- /col-lg-12 -->
+            <!-- /col-lg-12 -->
 
-          <!-- /row -->
-        </div>
-        <!-- /container -->
+            <!-- /row -->
+          </div>
+          <!-- /container -->
       </section>
-      <!-- /wrapper -->
     </section>
     <!-- /MAIN CONTENT -->
     <!--main content end-->

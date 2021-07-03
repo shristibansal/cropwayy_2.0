@@ -32,7 +32,7 @@ from sqlalchemy import DateTime,desc
 import base64
 from random import randint
 from datetime import datetime,timezone
-from io import BytesIO #Converts data from Database into bytes
+from io import BytesIO 
 from flask_login import LoginManager 
 from flask_login import login_user, current_user, logout_user,login_required
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -44,9 +44,9 @@ app = Flask(__name__)
 
 
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://cropwayy@cropwayydb:Messi#18@cropwayydb.mysql.database.azure.com/cropwayy"
+#app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://cropwayy@cropwayydb:Messi#18@cropwayydb.mysql.database.azure.com/cropwayy"
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/cropwayydb'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/cropwayydb'
 
 app.config['SECRET_KEY'] = 'kush123'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -54,6 +54,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 db.create_all()
+
+db.session.rollback()
 
 bootstrap = Bootstrap(app)
 
@@ -662,7 +664,9 @@ def confirm_applications(id):
     db.session.flush()
     db.session.commit()
 
-    return render_template('buyProduce.html')   
+    flag = "You have confirmed the contract"
+
+    return render_template('buyProduce.html',Flag = flag)   
 
 @app.route('/fapplications', methods=['GET'])
 @login_required
@@ -698,8 +702,6 @@ def applications():
     f = text("select * from Contract_info where cEmail = :email AND status = 0")
 
     user = db.engine.execute(f, email = email).fetchall()
-
-    print(user)
 
     return render_template('applications.html',details = user)   
 
@@ -778,11 +780,16 @@ def post_farmer_contract(id):
 
     status = False
 
+    IST = pytz.timezone('Asia/Kolkata')
+    datetime_utc = datetime.now(IST)
+
+    date = datetime_utc.strftime('%Y:%m:%d-%H:%M')
+
     Total = int(ut[0].Quantity) * int(ut[0].Price)
 
     #IST = timezone('UTC')     
  
-    entry = Contract_info(Total = Total,Status = status, Crop = Crop, cEmail = cEmail, fEmail = fEmail)
+    entry = Contract_info(Total = Total,Status = status, Crop = Crop, cEmail = cEmail, fEmail = fEmail,date = Date)
     db.session.add(entry)
     db.session.commit()
 
@@ -819,7 +826,9 @@ def invoice_confirm(id,date,number):
     if user[0].UType == 'wholesaler':
      
         return render_template('wdeals.html')
-    else:
+
+    elif user[0].UType == 'retailer':
+
         return render_template('rdeals.html')
 
 
@@ -867,6 +876,7 @@ def wPost():
 
 
 @app.route('/newPost', methods=['GET'])
+@login_required
 def newPost():
 
     email = session["email"]
@@ -1077,7 +1087,7 @@ def contract_search():
     crop  = request.form.get('crops')
 
 
-    s = text("select Sign_up.FullName, Corporate_info.Email,Corporate_info.Name,Corporate_info.Phone,Post_info.startDate,Post_info.endDate,Post_info.PostID,Post_info.Crop,Post_info.Description,Post_info.Quantity,Corporate_info.Locality,Corporate_info.State,Corporate_info.Pincode,Corporate_info.City, Post_info.Price from Cropwayydb.Sign_up,Cropwayydb.Post_info, Cropwayydb.Corporate_info where Post_info.Utype = 'corporate' AND Sign_up.Email = Corporate_info.Email  AND Post_info.Email = Corporate_info.Email AND Post_info.Crop = :c AND Corporate_info.State = :s")
+    s = text("select Sign_up.FullName, Corporate_info.Email,Corporate_info.Name,Corporate_info.Phone,Post_info.Date,Post_info.startDate,Post_info.endDate,Post_info.PostID,Post_info.Crop,Post_info.Description,Post_info.Quantity,Corporate_info.Locality,Corporate_info.State,Corporate_info.Pincode,Corporate_info.City, Post_info.Price from Cropwayydb.Sign_up,Cropwayydb.Post_info, Cropwayydb.Corporate_info where Post_info.Utype = 'corporate' AND Sign_up.Email = Corporate_info.Email  AND Post_info.Email = Corporate_info.Email AND Post_info.Crop = :c AND Corporate_info.State = :s")
 
     Result = db.engine.execute(s,c = crop, s = state).fetchall()
 

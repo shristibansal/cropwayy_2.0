@@ -17,115 +17,119 @@
 
   <script type="text/javascript">
     function googleTranslateElementInit() {
-      new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+      new google.translate.TranslateElement({ pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE }, 'google_translate_element');
     }
-    </script>
-    
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    
-<link rel="stylesheet" href= "{{ url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}">   
+  </script>
+
+  <script type="text/javascript"
+    src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}">
 
   <!--external css-->
-    <link rel="stylesheet" href= "{{ url_for('static', filename='lib/font-awesome/css/font-awesome.css') }}">  
+  <link rel="stylesheet" href="{{ url_for('static', filename='lib/font-awesome/css/font-awesome.css') }}">
   <!-- Custom styles for this template -->
-    <link rel="stylesheet" href= "{{ url_for('static', filename='css/style.css') }}">  
-    <link rel="stylesheet" href= "{{ url_for('static', filename='css/style-responsive.css') }}"> 
-  
-    
-    <style>
-    
-  
-html {
-  box-sizing: border-box;
-}
-
-*, *:before, *:after {
-  box-sizing: inherit;
-}
-
-.column1 {
-  float: left;
-  width: 25%;
-  margin-bottom: 16px;
-  padding: 0 15px;
-}
-
-.card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  margin: 8px;  
-}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style-responsive.css') }}">
 
 
+  <style>
+    html {
+      box-sizing: border-box;
+    }
 
-.container {
-  padding: 0 16px;
-}
+    *,
+    *:before,
+    *:after {
+      box-sizing: inherit;
+    }
 
-.container::after, .row::after {
-  content: "";
-  clear: both;
-  display: table;
-}
+    .column1 {
+      float: left;
+      width: 25%;
+      margin-bottom: 16px;
+      padding: 0 15px;
+    }
 
-.title {
-  color: grey;
-}
+    .card {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      margin: 8px;
+    }
 
 
-.button:hover {
-  background-color: #555;
-}
 
-@media screen and (max-width: 650px) {
-  .column {
-    width: 100%;
-    display: block;
-  }
-}
-    </style>
-    
-    
-    
-    
-    
-    
-    
-    <style>
-         
-              .adjust {
- margin: 20px;
-                  
-}
-          
-        
-        .content-pannel{
-            width: 100%;
-            
-        }
-        .pn{
-            
-                margin:15px;
-            background-color: #d9534f;
-            color: white;
-            height: auto;
-        }
-        #profile-01{
-            background-image: url(img/about.jpg);
-            width:auto;
-            margin:15px;
-            
-        }
-        img.src{
-            width: 100px;
-        }
-    </style>
+    .container {
+      padding: 0 16px;
+    }
+
+    .container::after,
+    .row::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+
+    .title {
+      color: grey;
+    }
+
+
+    .button:hover {
+      background-color: #555;
+    }
+
+    @media screen and (max-width: 650px) {
+      .column {
+        width: 100%;
+        display: block;
+      }
+    }
+  </style>
+
+
+
+
+
+
+
+  <style>
+    .adjust {
+      margin: 20px;
+
+    }
+
+
+    .content-pannel {
+      width: 100%;
+
+    }
+
+    .pn {
+
+      margin: 15px;
+      background-color: #d9534f;
+      color: white;
+      height: auto;
+    }
+
+    #profile-01 {
+      background-image: url(img/about.jpg);
+      width: auto;
+      margin: 15px;
+
+    }
+
+    img.src {
+      width: 100px;
+    }
+  </style>
 
 </head>
 
 <body>
-  
+
   <section id="container">
-    
+
     <!-- **********************************************************************************************************************************************************
         TOP BAR CONTENT & NOTIFICATIONS
         *********************************************************************************************************************************************************** -->
@@ -136,159 +140,159 @@ html {
       </div>
       <!--logo start-->
       <span class="notranslate"> <a href="{{url_for('home')}}" class="logo"><b>CROP<span>WAYY</span></b></a></span>
-     {% if current_user.is_authenticated %}
-      
-       <div class="top-menu">
+      {% if current_user.is_authenticated %}
+
+      <div class="top-menu">
         <ul class="nav pull-right top-menu">
-             <div id="google_translate_element"></div>
+          <div id="google_translate_element"></div>
           <li><a class="logout" href="{{url_for('logout')}}">Logout</a></li>
         </ul>
       </div>
-        {% else %}
-         <div class="top-menu">
+      {% else %}
+      <div class="top-menu">
         <ul class="nav pull-right top-menu">
           <li><a class="logout" href="{{url_for('login')}}">Login</a></li>
         </ul>
       </div>
-        {% endif %}
-        <div id="google_translate_element"></div>
+      {% endif %}
+      <div id="google_translate_element"></div>
     </header>
-    
+
     <!--header end-->
     <!-- **********************************************************************************************************************************************************
         MAIN SIDEBAR MENU
         *********************************************************************************************************************************************************** -->
     <!--sidebar start-->
-      <aside>
+    <aside>
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
           <p class="centered"> {% if current_user.is_authenticated %}
-              {% if current_user.UType=='farmer' %}
-             <img src="{{ url_for('static', filename='img/f_user.jpg') }}" class="img-circle" width="80">
-              {% elif current_user.UType=='corporate' %}
-              <img src="{{ url_for('static', filename='img/c_user.png') }}" class="img-circle" width="80">
-             
-              {% elif current_user.UType=='admin' %}
-             
-              <img src="{{ url_for('static', filename='img/a_user.jpg') }}" class="img-circle" width="80">
-              {% elif current_user.UType=='retailer' %}
-             
-              <img src="{{ url_for('static', filename='img/a_user.jpg') }}" class="img-circle" width="80">
+            {% if current_user.UType=='farmer' %}
+            <img src="{{ url_for('static', filename='img/f_user.jpg') }}" class="img-circle" width="80">
+            {% elif current_user.UType=='corporate' %}
+            <img src="{{ url_for('static', filename='img/c_user.png') }}" class="img-circle" width="80">
 
-              {% elif current_user.UType=='wholesaler' %}
-             
-              <img src="{{ url_for('static', filename='img/a_user.jpg') }}" class="img-circle" width="80">
-              {% endif %}
-                {% else %}
-           <img src="{{ url_for('static', filename='img/favicon.png') }}" class="img-circle" width="80">
+            {% elif current_user.UType=='admin' %}
+
+            <img src="{{ url_for('static', filename='img/a_user.jpg') }}" class="img-circle" width="80">
+            {% elif current_user.UType=='retailer' %}
+
+            <img src="{{ url_for('static', filename='img/a_user.jpg') }}" class="img-circle" width="80">
+
+            {% elif current_user.UType=='wholesaler' %}
+
+            <img src="{{ url_for('static', filename='img/a_user.jpg') }}" class="img-circle" width="80">
             {% endif %}
-            
-            
-            
-            </p>
+            {% else %}
+            <img src="{{ url_for('static', filename='img/favicon.png') }}" class="img-circle" width="80">
+            {% endif %}
+
+
+
+          </p>
           <h5 class="centered">
-              
-              {% if current_user.is_authenticated %}
-              {% if current_user.UType=='farmer' %}
-              <a href ="{{url_for('fprofile')}}">  {{ current_user.FullName}} </a>
-              {% elif current_user.UType=='corporate' %}
-              <a href ="{{url_for('cprofile')}}">  {{ current_user.FullName}} </a>
-              {% elif current_user.UType=='admin' %}
-              <a href ="{{url_for('cprofile')}}">  {{ current_user.FullName}} </a>
-              {% endif %}
-                {% else %}
-           Cropwian
+
+            {% if current_user.is_authenticated %}
+            {% if current_user.UType=='farmer' %}
+            <a href="{{url_for('fprofile')}}"> {{ current_user.FullName}} </a>
+            {% elif current_user.UType=='corporate' %}
+            <a href="{{url_for('cprofile')}}"> {{ current_user.FullName}} </a>
+            {% elif current_user.UType=='admin' %}
+            <a href="{{url_for('cprofile')}}"> {{ current_user.FullName}} </a>
             {% endif %}
-            </h5>
+            {% else %}
+            Cropwian
+            {% endif %}
+          </h5>
           <li class="mt">
             <a href="{{url_for('home')}}">
               <i class="fa fa-home"></i>
               <span>Home</span>
-              </a>
+            </a>
           </li>
-            <li class="sub-menu">
+          <li class="sub-menu">
             <a class="active" href="{{url_for('aboutus')}}">
               <i class="fa fa-globe"></i>
               <span>About Us</span>
-              </a>
-             </li>
-             <li class="sub-menu">
-             <a href="{{url_for('gallery')}}">
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('gallery')}}">
               <i class="fa fa-camera"></i>
               <span>Gallery</span>
-              </a>
-             </li>
-             <li class="sub-menu">
-            <a  href="{{url_for('contactus')}}">
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="{{url_for('contactus')}}">
               <i class="fa fa-phone-square"></i>
               <span>Contact Us</span>
-              </a>
-             </li>
-             <li class="sub-menu">
+            </a>
+          </li>
+          <li class="sub-menu">
             <a href="{{url_for('farmstore')}}">
               <i class="fa fa-shopping-cart"></i>
               <span>Farm Store</span>
-              </a>
-             </li>
-            {% if current_user.is_authenticated %}
-           {% if current_user.UType=='farmer' %}
-            <li class="sub-menu">
+            </a>
+          </li>
+          {% if current_user.is_authenticated %}
+          {% if current_user.UType=='farmer' %}
+          <li class="sub-menu">
             <a href="{{url_for('fDash')}}">
               <i class="fa fa-dashboard"></i>
               <span>Farmer's Dashboard</span>
-              </a>
-             </li>
-             <li class="sub-menu">
+            </a>
+          </li>
+          <li class="sub-menu">
             <a href="javascript:;">
               <i class="fa fa-desktop"></i>
               <span>Our Services</span>
-              </a>
-              <ul class="sub">
-                <li><a href="{{url_for('prediction')}}">Predict Disease</a></li>
-                <li><a href="{{url_for('cropRec')}}">Crop Recommendation</a></li>
-                <li><a href="{{url_for('fertilizer')}}">Fertilizers</a></li>
-                <li><a href="{{url_for('flower')}}">Flower Species</a></li>
-                <li><a href="{{url_for('tips')}}">Everyday Tips</a></li>
-                <li><a href="{{url_for('govtScheme')}}">Govt. Schemes</a></li>
-              </ul>
+            </a>
+            <ul class="sub">
+              <li><a href="{{url_for('prediction')}}">Predict Disease</a></li>
+              <li><a href="{{url_for('cropRec')}}">Crop Recommendation</a></li>
+              <li><a href="{{url_for('fertilizer')}}">Fertilizers</a></li>
+              <li><a href="{{url_for('flower')}}">Flower Species</a></li>
+              <li><a href="{{url_for('tips')}}">Everyday Tips</a></li>
+              <li><a href="{{url_for('govtScheme')}}">Govt. Schemes</a></li>
+            </ul>
           </li>
-             {% elif current_user.UType=='corporate' %}
-            <li class="sub-menu">
+          {% elif current_user.UType=='corporate' %}
+          <li class="sub-menu">
             <a href="{{url_for('cDash')}}">
               <i class="fa fa-dashboard"></i>
               <span>Corporate's Dashboard</span>
-              </a>
-             </li>
-              {% elif current_user.UType=='admin' %}
-            <li class="sub-menu">
+            </a>
+          </li>
+          {% elif current_user.UType=='admin' %}
+          <li class="sub-menu">
             <a href="{{url_for('cDash')}}">
               <i class="fa fa-dashboard"></i>
               <span>Admin's Dashboard</span>
-              </a>
-             </li>
-            {% endif %}
-            
-            
-              {% else %}
-            
-             <li class="sub-menu">
+            </a>
+          </li>
+          {% endif %}
+
+
+          {% else %}
+
+          <li class="sub-menu">
             <a href="{{url_for('login')}}">
               <i class="fa fa-sign-in"></i>
               <span>Login</span>
-              </a>
-             </li>
-             <li class="sub-menu">
+            </a>
+          </li>
+          <li class="sub-menu">
             <a href="{{url_for('signup')}}">
               <i class="fa fa-phone-square"></i>
               <span>Signup</span>
-              </a>
-             </li>
-            
-            {% endif %}
-          
-        
-     
+            </a>
+          </li>
+
+          {% endif %}
+
+
+
         </ul>
         <!-- sidebar menu end-->
       </div>
@@ -300,80 +304,108 @@ html {
     <!--main content start-->
     <section id="main-content">
       <section class="wrapper site-min-height">
-        
-         <div >
-             
-             <img src="{{ url_for('static',filename='img/about.png') }}" width=100% height=300px/>
-          </div>
-          
-           <div>
-                <div class="content-panel pn">
-                  
-                  <div class="row ">
-                     
-                       <div class="col-md-12">
-                      <div class="adjust">
-                         
-                          <img src="{{ url_for('static',filename='img/about1.jpg') }}" width=28% height=300px align="left"/></div>
-                      
-                      <div class="row">
-                      <div class="col-md-8 mb">
-                      <font size="4"> 
-                       <p >Agriculture is the backbone of the Indian Economy"- said Mahatma Gandhi six decades ago. Even today, the situation is still the same, with almost the entire economy being sustained by agriculture, which is the mainstay of the villages. It contributes 16% of the overall GDP and accounts for employment of approximately 52% of the Indian population. Rapid growth in agriculture is essential not only for self-reliance but also to earn valuable foreign exchange.</p>
-                    
-                          <p>Indian farmers are second to none in production and productivity despite of the fact that millions are marginal and small farmers. They adopt improved agriculture technology as efficiently as farmers in developed countries. It is felt that with provision of timely and adequate inputs such as fertilizers, seeds, pesticides and by making available affordable agricultural credit /crop insurance, Indian farmers are going to ensure food and nutritional security to the Nation.</p></font>
-                             
-                      </div></div>
-                           <div class="adjust">
-                            <div class="row" >
-                                <div class="col-md-12 mb">
-                                    <font size="4"> 
-                                        <p>It is envisaged to make available relevant information and services to the farming community and private sector through the use of information and communication technologies, to supplement the existing delivery channels provided for by the department. Farmers’ Portal is an endeavour in this direction to create one stop shop for meeting all informational needs relating to Agriculture, Animal Husbandry and Fisheries sectors production, sale/storage of an Indian farmer. With this Indian Farmer will not be required to sift through maze of websites created for specific purposes.</p>
-                                        <p>Once in the Farmers’ Portal, a farmer will be able to get all relevant information on specific subjects around his village/block /district or state. This information will be delivered in the form of text, SMS, email and audio/video in the language he or she understands. These levels can be easily reached through the Map of India placed on the Home page. Farmers will also be able to ask specific queries as well as give valuable feedback through the Feedback module specially developed for the purpose.
-                                        
-                                        </p>
-                                    </font>
-                                </div></div></div></div>
+
+        <div>
+
+          <img src="{{ url_for('static',filename='img/about.png') }}" width=100% height=300px />
+        </div>
+
+        <div>
+          <div class="content-panel pn">
+
+            <div class="row ">
+
+              <div class="col-md-12">
+                <div class="adjust">
+
+                  <img src="{{ url_for('static',filename='img/about1.jpg') }}" width=28% height=300px align="left" />
                 </div>
-                    
-                   
-                <!-- /content-panel -->
-               </div></div>
-           <h2 style="text-align:center">Our Team</h2>
-<div class="row">
-  <div class="column1">
-    <div class="card">
-      <img src="{{ url_for('static',filename='img/ks.jpg') }}" alt="Kushagra" style="width:100%">
-      <div class="container">
-        <h2>Kushagra Sharma</h2>
-        <p class="title">Nokar</p>
-     
-        <p>giantkillerkushagra@gmail.com</p>
-        
-      </div>
-    </div>
-  </div>
 
-  <div class="column1">
-    <div class="card">
-    <img src="{{ url_for('static',filename='img/shristi_full.jpeg') }}" alt="Kushagra" style="width:100%">
-      <div class="container">
-        <h2>Shristi Bansal</h2>
-        <p class="title">Founder</p>
-    
-        <p>shristibansal6@gmail.com</p>
-       
-      </div>
-    </div>
-  </div>
+                <div class="row">
+                  <div class="col-md-8 mb">
+                    <font size="4">
+                      <p>Agriculture is the backbone of the Indian Economy"- said Mahatma Gandhi six decades ago. Even
+                        today, the situation is still the same, with almost the entire economy being sustained by
+                        agriculture, which is the mainstay of the villages. It contributes 16% of the overall GDP and
+                        accounts for employment of approximately 52% of the Indian population. Rapid growth in
+                        agriculture is essential not only for self-reliance but also to earn valuable foreign exchange.
+                      </p>
 
-</div>
-          <br><br><br><br><br>
+                      <p>Indian farmers are second to none in production and productivity despite of the fact that
+                        millions are marginal and small farmers. They adopt improved agriculture technology as
+                        efficiently as farmers in developed countries. It is felt that with provision of timely and
+                        adequate inputs such as fertilizers, seeds, pesticides and by making available affordable
+                        agricultural credit /crop insurance, Indian farmers are going to ensure food and nutritional
+                        security to the Nation.</p>
+                    </font>
+
+                  </div>
+                </div>
+                <div class="adjust">
+                  <div class="row">
+                    <div class="col-md-12 mb">
+                      <font size="4">
+                        <p>It is envisaged to make available relevant information and services to the farming community
+                          and private sector through the use of information and communication technologies, to
+                          supplement the existing delivery channels provided for by the department. Farmers’ Portal is
+                          an endeavour in this direction to create one stop shop for meeting all informational needs
+                          relating to Agriculture, Animal Husbandry and Fisheries sectors production, sale/storage of an
+                          Indian farmer. With this Indian Farmer will not be required to sift through maze of websites
+                          created for specific purposes.</p>
+                        <p>Once in the Farmers’ Portal, a farmer will be able to get all relevant information on
+                          specific subjects around his village/block /district or state. This information will be
+                          delivered in the form of text, SMS, email and audio/video in the language he or she
+                          understands. These levels can be easily reached through the Map of India placed on the Home
+                          page. Farmers will also be able to ask specific queries as well as give valuable feedback
+                          through the Feedback module specially developed for the purpose.
+
+                        </p>
+                      </font>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- /content-panel -->
+          </div>
+        </div>
+        <h2 style="text-align:center">Our Team</h2>
+        <div class="row">
+          <div class="column1">
+            <div class="card">
+              <img src="{{ url_for('static',filename='img/ks.jpg') }}" alt="Kushagra" style="width:100%">
+              <div class="container">
+                <h2>Kushagra Sharma</h2>
+                <p class="title">Nokar</p>
+
+                <p>giantkillerkushagra@gmail.com</p>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="column1">
+            <div class="card">
+              <img src="{{ url_for('static',filename='img/shristi_full.jpeg') }}" alt="Kushagra" style="width:100%">
+              <div class="container">
+                <h2>Shristi Bansal</h2>
+                <p class="title">Founder</p>
+
+                <p>shristibansal6@gmail.com</p>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <br><br><br><br><br>
       </section>
       <!-- /wrapper -->
     </section>
-      
-      
+
+
     <!-- /MAIN CONTENT -->
     <!--main content end-->
     <!--footer start-->
@@ -382,32 +414,32 @@ html {
         <p>
           &copy; Copyrights <strong>Cropwayy</strong>. All Rights Reserved
         </p>
-       
-         
-          Created by team Cropwayy 
-        </div>
-        <a href="about.html#" class="go-top">
-          <i class="fa fa-angle-up"></i>
-          </a>
-      
+
+
+        Created by team Cropwayy
+      </div>
+      <a href="about.html#" class="go-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+
     </footer>
     <!--footer end-->
   </section>
   <!-- js placed at the end of the document so the pages load faster -->
-    <script src="{{ url_for('static', filename='lib/jquery/jquery.min.js') }}" type="text/javascript"></script>
-     <script src="{{ url_for('static', filename='lib/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
-     <script src="{{ url_for('static', filename='lib/jquery-ui-1.9.2.custom.min.js') }}" type="text/javascript"></script>
-    <script src="{{ url_for('static', filename='lib/jquery.ui.touch-punch.min.js') }}" type="text/javascript"></script>
-    <script src="{{ url_for('static', filename='lib/jquery.ui.touch-punch.min.js') }}" type="text/javascript"></script>
- <script src="{{ url_for('static', filename='lib/jquery.dcjqaccordion.2.7.js') }}" type="text/javascript"></script>
- <script src="{{ url_for('static', filename='lib/jquery.scrollTo.min.js') }}" type="text/javascript"></script>
- <script src="{{ url_for('static', filename='lib/jquery.nicescroll.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery/jquery.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery-ui-1.9.2.custom.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.ui.touch-punch.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.ui.touch-punch.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.dcjqaccordion.2.7.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.scrollTo.min.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='lib/jquery.nicescroll.js') }}" type="text/javascript"></script>
 
-    
+
 
   <!--common script for all pages-->
-     <script src="{{ url_for('static', filename='lib/common-scripts.js') }}" type="text/javascript"></script>
- 
+  <script src="{{ url_for('static', filename='lib/common-scripts.js') }}" type="text/javascript"></script>
+
   <!--script for this page-->
 
 </body>
