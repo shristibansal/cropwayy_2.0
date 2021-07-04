@@ -210,12 +210,6 @@
               <span>Farm Store</span>
             </a>
           </li>
-          <li class="sub-menu">
-            <a href="{{url_for('farmBot')}}">
-              <i class="fas fa-robot"></i>
-              <span>farmBot</span>
-            </a>
-          </li>
           {% if current_user.is_authenticated %}
           {% if current_user.UType=='farmer' %}
           <li class="sub-menu">

@@ -18,11 +18,11 @@ from flask_login import UserMixin
 
 app = Flask(__name__)
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/cropwayydb'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/cropwayydb'
 
 
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://cropwayy@cropwayydb:Messi#18@cropwayydb.mysql.database.azure.com/cropwayy"
+#app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://cropwayy@cropwayydb:Messi#18@cropwayydb.mysql.database.azure.com/cropwayy"
 
 
 

@@ -44,9 +44,9 @@ app = Flask(__name__)
 
 
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://cropwayy@cropwayydb:Messi#18@cropwayydb.mysql.database.azure.com/cropwayy"
+#app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://cropwayy@cropwayydb:Messi#18@cropwayydb.mysql.database.azure.com/cropwayy"
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/cropwayydb'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/cropwayydb'
 
 app.config['SECRET_KEY'] = 'kush123'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -1054,13 +1054,13 @@ def contract_search_retailer():
     print(view)
 
     if(view == 'farmer'):
-        s = text("select Sign_up.FullName, Farmer_info.Email,Farmer_info.Name,Farmer_info.Phone,Post_info.Crop,Post_info.Description,Post_info.Description,Post_info.PostID,Post_info.Quantity,Farmer_info.Locality,Farmer_info.State,Farmer_info.Pincode,Farmer_info.City, Post_info.Price from Cropwayydb.Sign_up,Cropwayydb.Post_info, Cropwayydb.Farmer_info where Post_info.Utype = 'farmer' AND Sign_up.Email = Farmer_info.Email  AND Post_info.Email = Farmer_info.Email AND Post_info.Crop = :c AND Farmer_info.State = :s")
+        s = text("select Sign_up.FullName, Farmer_info.Email,Farmer_info.Name,Farmer_info.Phone,Post_info.Crop,Post_info.Description,Post_info.Date,Post_info.Description,Post_info.PostID,Post_info.Quantity,Farmer_info.Locality,Farmer_info.State,Farmer_info.Pincode,Farmer_info.City, Post_info.Price from Cropwayydb.Sign_up,Cropwayydb.Post_info, Cropwayydb.Farmer_info where Post_info.Utype = 'farmer' AND Sign_up.Email = Farmer_info.Email  AND Post_info.Email = Farmer_info.Email AND Post_info.Crop = :c AND Farmer_info.State = :s")
 
         Result = db.engine.execute(s,c = crop, s = state).fetchall()
 
         print(Result)
     else:
-        s = text("select Sign_up.FullName, Wholesaler_info.Email,Wholesaler_info.Name,Wholesaler_info.Phone,Post_info.Crop,Post_info.Description,Post_info.PostID,Post_info.Quantity,Wholesaler_info.Locality,Wholesaler_info.State,Wholesaler_info.Pincode,Wholesaler_info.City, Post_info.Price from Cropwayydb.Sign_up,Cropwayydb.Post_info, Cropwayydb.Wholesaler_info where Post_info.Utype = 'wholesaler' AND Sign_up.Email = Wholesaler_info.Email  AND Post_info.Email = Wholesaler_info.Email AND Post_info.Crop = :c AND Wholesaler_info.State = :s")
+        s = text("select Sign_up.FullName, Wholesaler_info.Email,Wholesaler_info.Name,Wholesaler_info.Phone,Post_info.Date,Post_info.Crop,Post_info.Description,Post_info.PostID,Post_info.Quantity,Wholesaler_info.Locality,Wholesaler_info.State,Wholesaler_info.Pincode,Wholesaler_info.City, Post_info.Price from Cropwayydb.Sign_up,Cropwayydb.Post_info, Cropwayydb.Wholesaler_info where Post_info.Utype = 'wholesaler' AND Sign_up.Email = Wholesaler_info.Email  AND Post_info.Email = Wholesaler_info.Email AND Post_info.Crop = :c AND Wholesaler_info.State = :s")
         Result = db.engine.execute(s,c = crop, s = state).fetchall()
 
         print(Result)
@@ -1577,6 +1577,47 @@ def edit_wholesaler_submit():
     db.session.commit()
     return redirect(url_for('wprofile'))
 
+
+
+@app.route("/post_whole_submit", methods = ['GET', 'POST'])
+def post_whole_submit():
+
+    email = session["email"]
+
+    details = Sign_up.query.filter_by(Email=email).first()
+
+    utype = details.UType
+
+    crop = request.form.get('crops')
+
+    print(crop)
+
+    desc = request.form.get('desc')
+
+    price = request.form.get('price')
+
+    quantity = request.form.get('qty')
+
+    IST = pytz.timezone('Asia/Kolkata')
+    datetime_utc = datetime.now(IST)
+
+    date = datetime_utc.strftime('%Y:%m:%d-%H:%M')
+
+    mspCheck = db.session.query(Crop_table.MSP).filter(Crop_table.cropName == crop).first()
+
+    print(mspCheck)
+
+    if(mspCheck.MSP >= int(price)):
+        flash("*Price should be greater than or equal to MSP (Minimum Support Price)")
+        return redirect('wPost')
+        
+
+    else:
+
+        entry = Post_info(Price = price,UType = utype ,Quantity = quantity,Crop = crop,Description = desc,Email = email, Date = date,Status = True)
+        db.session.add(entry)
+        db.session.commit()
+        return redirect(url_for('sellProduce'))  
 
 @app.route("/post_farmer_submit", methods = ['GET', 'POST'])
 def post_farmer_submit():
