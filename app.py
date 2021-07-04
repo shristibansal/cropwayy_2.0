@@ -49,6 +49,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://cropwayy@cropwayydb:Messi#18@cr
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/cropwayydb'
 
 app.config['SECRET_KEY'] = 'kush123'
+app.config['SQLALCHEMY_POOL_RECYCLE'] = 3600
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
